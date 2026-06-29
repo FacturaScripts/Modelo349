@@ -1,0 +1,27 @@
+/node_modules/
+/vendor/
+package-lock.json
+.DS_Store
+.htaccess
+*.cache
+*.lock
+
+# eclipse
+.buildpath
+.project
+.settings
+
+# netbeans
+/nbproject/
+
+# phpstorm
+/.idea/
+
+# sscode
+.vscode
+*.code-workspace
+
+# IA
+CLAUDE.md
+/.claude
+.codex
