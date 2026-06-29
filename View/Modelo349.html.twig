@@ -1,0 +1,201 @@
+{#
+/**
+ * This file is part of Modelo349 plugin for FacturaScripts
+ * Copyright (C) 2026 Carlos Garcia Gomez <carlos@facturascripts.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/.
+ */
+#}
+{% extends "Master/MenuBghTemplate.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function toggleDeclarationType() {
+            const type = document.getElementById('declarationtype').value;
+            const prevGroup = document.getElementById('justificante-anterior-group');
+            prevGroup.style.display = (type === 'C' || type === 'S') ? '' : 'none';
+        }
+
+        function downloadTxt349() {
+            document.getElementById('action349').value = 'download-txt';
+            document.forms['modelo349'].submit();
+            document.getElementById('action349').value = '';
+        }
+    </script>
+{% endblock %}
+
+{% block bodyHeaderOptions %}
+    {{ parent() }}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h1 class="h2">
+                    <i class="{{ fsc.getPageData().icon }} fa-fw"></i> {{ fsc.title }}
+                </h1>
+                <p class="text-muted">{{ trans('model-349-p') }}</p>
+            </div>
+        </div>
+        <form method="post" name="modelo349">
+            {{ formToken() }}
+            <input type="hidden" name="action" id="action349" value="">
+            <div class="row g-2 align-items-end">
+                <div class="col-sm">
+                    <div class="mb-2">
+                        {{ trans('exercise') }}
+                        <select name="codejercicio" class="form-select" required onchange="this.form.submit()">
+                            {% for value, label in fsc.getEjercicios() %}
+                                <option value="{{ value }}"{{ value == fsc.codejercicio ? ' selected' : '' }}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-2">
+                        {{ trans('period') }}
+                        <select name="periodo" class="form-select" required onchange="this.form.submit()">
+                            {% for value, label in fsc.getPeriodOptions() %}
+                                <option value="{{ value }}"{{ value == fsc.periodo ? ' selected' : '' }}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-2">
+                        {{ trans('serie') }}
+                        <select name="codserie" class="form-select" onchange="this.form.submit()">
+                            {% for value, label in fsc.getSeries() %}
+                                <option value="{{ value }}"{{ value == fsc.codserie ? ' selected' : '' }}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-2">
+                        {{ trans('declaration-type') }}
+                        <select name="declarationtype" id="declarationtype" class="form-select"
+                                onchange="toggleDeclarationType()">
+                            <option value=""{{ fsc.declarationType == '' ? ' selected' : '' }}>{{ trans('normal-declaration') }}</option>
+                            <option value="C"{{ fsc.declarationType == 'C' ? ' selected' : '' }}>{{ trans('complementary-declaration') }}</option>
+                            <option value="S"{{ fsc.declarationType == 'S' ? ' selected' : '' }}>{{ trans('substitutive-declaration') }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="mb-2">
+                        {{ trans('justificante-number') }}
+                        <input type="text" name="justificante" value="{{ fsc.justificante }}"
+                               class="form-control" maxlength="13" pattern="[0-9]*"
+                               placeholder="3492025000001"/>
+                    </div>
+                </div>
+                <div class="col-sm" id="justificante-anterior-group"
+                     style="{{ fsc.declarationType in ['C', 'S'] ? '' : 'display:none' }}">
+                    <div class="mb-2">
+                        {{ trans('previous-justificante-number') }}
+                        <input type="text" name="justificanteanterior" value="{{ fsc.justificanteAnterior }}"
+                               class="form-control" maxlength="13" pattern="[0-9]*"/>
+                    </div>
+                </div>
+                <div class="col-sm-auto">
+                    <div class="mb-2 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-eye fa-fw me-1"></i> {{ trans('preview') }}
+                        </button>
+                        <button type="button" onclick="downloadTxt349();" class="btn btn-secondary">
+                            <i class="fa-regular fa-file-alt fa-fw me-1"></i> {{ trans('txt-for-treasury') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="sales-tab" data-bs-toggle="tab" href="#sales" role="tab"
+               aria-controls="sales" aria-selected="true">
+                {{ trans('intracomm-sales') }}
+                {% if fsc.salesData is not empty %}
+                    <span class="badge bg-secondary ms-1">{{ fsc.salesData | length }}</span>
+                {% endif %}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="purchases-tab" data-bs-toggle="tab" href="#purchases" role="tab"
+               aria-controls="purchases" aria-selected="false">
+                {{ trans('intracomm-purchases') }}
+                {% if fsc.purchasesData is not empty %}
+                    <span class="badge bg-secondary ms-1">{{ fsc.purchasesData | length }}</span>
+                {% endif %}
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="sales" role="tabpanel" aria-labelledby="sales-tab">
+            {{ _self.operatorsTable(fsc.salesData, fsc.salesTotals, fsc) }}
+        </div>
+        <div class="tab-pane fade" id="purchases" role="tabpanel" aria-labelledby="purchases-tab">
+            {{ _self.operatorsTable(fsc.purchasesData, fsc.purchasesTotals, fsc) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% macro operatorsTable(data, totals, fsc) %}
+    {% if fsc.searched %}
+        {% if data is not empty %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>{{ trans('nif-niva') }}</th>
+                            <th>{{ trans('name') }}</th>
+                            <th>{{ trans('country') }}</th>
+                            <th>{{ trans('operation-key') }}</th>
+                            <th class="text-end">{{ trans('tax-base') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data %}
+                            <tr>
+                                <td>{{ row.cifnif }}</td>
+                                <td>{{ row.nombre }}</td>
+                                <td>{{ fsc.getCountryName(row.codpais) }}</td>
+                                <td>
+                                    <span class="badge bg-primary">{{ row.clave }}</span>
+                                    {{ trans('349-key-' ~ row.clave) }}
+                                </td>
+                                <td class="text-end text-nowrap">{{ money(row.base) }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-warning fw-bold">
+                            <td colspan="4">{{ trans('total') }}</td>
+                            <td class="text-end text-nowrap">{{ money(totals.total) }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-warning m-3">
+                <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                {{ trans('349-no-data') }}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
