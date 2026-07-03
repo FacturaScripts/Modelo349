@@ -65,6 +65,11 @@ class Modelo349 extends Controller
     /** @var bool */
     public $searched = false;
 
+    public function getCompanies(): array
+    {
+        return Empresas::all();
+    }
+
     public function getCountryName(string $codpais): string
     {
         $pais = Paises::get($codpais);
