@@ -177,7 +177,7 @@ document.getElementById('action349').value = '';
 								<td>{{ fsc.getCountryName(row.codpais) }}</td>
 								<td>
 									<span class="badge bg-primary">{{ row.clave }}</span>
-									{{ trans('349-key-' ~ row.clave) }}
+									{{ trans('349-key-' ~ row.clave|lower) }}
 								</td>
 								<td class="text-end text-nowrap">{{ money(row.base) }}</td>
 							</tr>
