@@ -24,6 +24,7 @@ use FacturaScripts\Core\DataSrc\Ejercicios;
 use FacturaScripts\Core\DataSrc\Empresas;
 use FacturaScripts\Core\DataSrc\Paises;
 use FacturaScripts\Core\Tools;
+use FacturaScripts\Dinamic\Lib\Clave349;
 use FacturaScripts\Dinamic\Lib\Txt349Export;
 use FacturaScripts\Dinamic\Model\Serie;
 
@@ -218,10 +219,10 @@ class Modelo349 extends Controller
         $euIn = $this->getEuCountriesIn();
 
         $this->salesData = $this->queryOperators(
-            'facturascli', 'clientes', 'codcliente', 'idcontactofact', $dates, $euIn, 'E'
+            'facturascli', 'clientes', 'codcliente', 'idcontactofact', $dates, $euIn, true
         );
         $this->purchasesData = $this->queryOperators(
-            'facturasprov', 'proveedores', 'codproveedor', 'idcontacto', $dates, $euIn, 'A'
+            'facturasprov', 'proveedores', 'codproveedor', 'idcontacto', $dates, $euIn, false
         );
 
         $this->salesTotals = ['total' => array_sum(array_column($this->salesData, 'base'))];
@@ -232,6 +233,20 @@ class Modelo349 extends Controller
         }
     }
 
+    /**
+     * Obtiene los operadores intracomunitarios del periodo, acumulados por operador y clave de operación.
+     * Solo se incluyen las facturas cuya operación es intracomunitaria (bienes o servicios),
+     * ya que la clave se deduce del campo operacion de la factura.
+     *
+     * @param string $facturasTable Tabla de facturas (facturascli o facturasprov).
+     * @param string $terceroTable Tabla del tercero (clientes o proveedores).
+     * @param string $codField Campo que relaciona la factura con el tercero.
+     * @param string $contactField Campo del tercero con el contacto del que se toma el país.
+     * @param array $dates Fechas de inicio ('from') y fin ('to') del periodo.
+     * @param string $euIn Lista SQL de países de la UE.
+     * @param bool $esVenta true para ventas, false para compras.
+     * @return array
+     */
     protected function queryOperators(
         string $facturasTable,
         string $terceroTable,
@@ -239,15 +254,21 @@ class Modelo349 extends Controller
         string $contactField,
         array $dates,
         string $euIn,
-        string $clave
+        bool $esVenta
     ): array {
-        $sql = 'SELECT t.cifnif, t.razonsocial, ct.codpais, SUM(f.neto) AS base'
+        $operaciones = array_map(
+            fn($operacion) => $this->dataBase->var2str($operacion),
+            Clave349::operaciones($esVenta)
+        );
+
+        $sql = 'SELECT t.cifnif, t.razonsocial, ct.codpais, f.operacion, SUM(f.neto) AS base'
             . ' FROM ' . $facturasTable . ' f'
             . ' INNER JOIN ' . $terceroTable . ' t ON t.' . $codField . ' = f.' . $codField
             . ' LEFT JOIN contactos ct ON ct.idcontacto = t.' . $contactField
             . ' WHERE f.fecha >= ' . $this->dataBase->var2str($dates['from'])
             . ' AND f.fecha <= ' . $this->dataBase->var2str($dates['to'])
             . ' AND f.editable = ' . $this->dataBase->var2str(false)
+            . ' AND f.operacion IN (' . implode(', ', $operaciones) . ')'
             . ' AND ct.codpais IN (' . $euIn . ')'
             . ' AND t.cifnif IS NOT NULL AND t.cifnif <> \'\'';
 
@@ -255,9 +276,9 @@ class Modelo349 extends Controller
             $sql .= ' AND f.codserie = ' . $this->dataBase->var2str($this->codserie);
         }
 
-        $sql .= ' GROUP BY t.cifnif, t.razonsocial, ct.codpais'
+        $sql .= ' GROUP BY t.cifnif, t.razonsocial, ct.codpais, f.operacion'
             . ' HAVING SUM(f.neto) > 0'
-            . ' ORDER BY t.cifnif ASC;';
+            . ' ORDER BY t.cifnif ASC, f.operacion ASC;';
 
         $result = [];
         foreach ($this->dataBase->select($sql) as $row) {
@@ -266,7 +287,7 @@ class Modelo349 extends Controller
                 'nombre'  => $row['razonsocial'],
                 'codpais' => $row['codpais'],
                 'base'    => round((float)$row['base'], 2),
-                'clave'   => $clave,
+                'clave'   => Clave349::porOperacion($esVenta, $row['operacion']),
             ];
         }
         return $result;

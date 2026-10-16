@@ -37,8 +37,8 @@ class Txt349Export
      *
      * @param int    $year
      * @param string $periodo          '1T'|'2T'|'3T'|'4T'|'01'-'12'
-     * @param array  $salesData        Entregas intracomunitarias (clave E)
-     * @param array  $purchasesData    Adquisiciones intracomunitarias (clave A)
+     * @param array  $salesData        Ventas intracomunitarias (clave E entregas de bienes, S prestaciones de servicios)
+     * @param array  $purchasesData    Compras intracomunitarias (clave A adquisiciones de bienes, I de servicios)
      * @param string $justificante     Número de 13 dígitos; si vacío se genera automáticamente
      * @param string $declarationType  ''|'C'|'S'
      * @param string $justificanteAnterior
