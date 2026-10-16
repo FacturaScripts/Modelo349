@@ -351,6 +351,26 @@ final class Txt349ExportTest extends TestCase
         $this->assertEquals('A', $lines[1][132], 'La clave de adquisición intracomunitaria debe ser A');
     }
 
+    public function testExportClaveSalesServicesIsS(): void
+    {
+        $operator = array_merge($this->sampleSalesOperator(), ['clave' => 'S']);
+        $lines = $this->exportLines([$operator], []);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        $this->assertEquals('S', $lines[1][132], 'La clave de prestación intracomunitaria de servicios debe ser S');
+    }
+
+    public function testExportClavePurchasesServicesIsI(): void
+    {
+        $operator = array_merge($this->samplePurchasesOperator(), ['clave' => 'I']);
+        $lines = $this->exportLines([], [$operator]);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        $this->assertEquals('I', $lines[1][132], 'La clave de adquisición intracomunitaria de servicios debe ser I');
+    }
+
     public function testExportNormalDeclaracionType(): void
     {
         $lines = $this->exportLines([$this->sampleSalesOperator()], []);
