@@ -230,25 +230,41 @@ class Txt349Export
     }
 
     /**
-     * Construye el campo NIF del operador comunitario (17 chars = 2 codiso + 15 número).
+     * Construye el campo NIF del operador comunitario (17 chars = 2 prefijo del NIF-IVA + 15 número).
+     * El código de país son las dos primeras letras del NIF-IVA, que coinciden con el código ISO salvo en
+     * Grecia (EL en lugar de GR). Del número se quita tanto el código ISO como el prefijo del NIF-IVA, y también
+     * los espacios, guiones y demás separadores.
      */
     public static function getNifOperador(array $op): string
     {
         $codpais = $op['codpais'] ?? '';
-        $cifnif  = self::sanitize($op['cifnif'] ?? '');
+        $cifnif  = (string)preg_replace('/[^A-Z0-9]/', '', strtoupper(self::sanitize($op['cifnif'] ?? '')));
 
         $pais   = Paises::get($codpais);
         $codiso = strtoupper($pais->codiso ?? '');
+        $prefix = self::vatPrefix($codiso);
 
         $nifNum = $cifnif;
-        if (!empty($codiso) && stripos($cifnif, $codiso) === 0) {
-            $nifNum = substr($cifnif, strlen($codiso));
+        foreach (array_unique([$prefix, $codiso]) as $start) {
+            if (!empty($start) && stripos($cifnif, $start) === 0) {
+                $nifNum = substr($cifnif, strlen($start));
+                break;
+            }
         }
 
-        $countryCode = self::formatString($codiso, 2, ' ', STR_PAD_RIGHT);
+        $countryCode = self::formatString($prefix, 2, ' ', STR_PAD_RIGHT);
         $nifPart     = self::formatString($nifNum, 15, ' ', STR_PAD_RIGHT);
 
         return $countryCode . $nifPart;
+    }
+
+    /**
+     * Prefijo del NIF-IVA a partir del código ISO del país: EL para Grecia (GR) y el propio código para el resto.
+     * Cuando el core tenga Vies::vatPrefix() (PR NeoRazorX/facturascripts#2059) se podrá usar ese.
+     */
+    public static function vatPrefix(string $codiso): string
+    {
+        return $codiso === 'GR' ? 'EL' : $codiso;
     }
 
     /**
