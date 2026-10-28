@@ -196,6 +196,18 @@ final class Txt349ExportTest extends TestCase
         $this->assertStringContainsString('123456789', $result);
     }
 
+    public function testGetNifOperadorGreeceUsesVatPrefix(): void
+    {
+        // el código de país son las dos primeras letras del NIF-IVA: EL para Grecia, no su código ISO (GR)
+        foreach (['EL123456789', 'GR123456789', '123456789', 'el-123 456 789'] as $cifnif) {
+            $result = Txt349Export::getNifOperador(['cifnif' => $cifnif, 'codpais' => 'GRC']);
+            $this->assertSame('EL123456789      ', $result, "NIF del operador griego incorrecto para {$cifnif}");
+        }
+
+        $this->assertSame('EL', Txt349Export::vatPrefix('GR'));
+        $this->assertSame('DE', Txt349Export::vatPrefix('DE'));
+    }
+
     public function testGetNifOperadorAlwaysReturns17Chars(): void
     {
         $operators = [
