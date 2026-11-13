@@ -1,0 +1,19 @@
+{
+    "349-key-a": "Intracommunautaire verwerving van goederen",
+    "349-key-c": "Consignaties (vervangend NIF)",
+    "349-key-d": "Zendingen (retour)",
+    "349-key-e": "Vrijgestelde intracommunautaire levering van goederen",
+    "349-key-h": "Leveringen na invoer (AEO zonder garantie)",
+    "349-key-i": "Intracommunautaire verwerving van diensten",
+    "349-key-m": "Leveringen na import",
+    "349-key-r": "Consignaties (correctie)",
+    "349-key-s": "Intracommunautaire dienstverrichting",
+    "349-key-t": "Driehoeksverkeer",
+    "349-no-data": "Er zijn geen intracommunautaire transacties in de geselecteerde periode. Controleer of aan klanten en leveranciers een EU-land en een fiscaal identificatienummer zijn toegewezen.",
+    "intracomm-purchases": "Intracommunautaire aankopen",
+    "intracomm-sales": "Intracommunautaire leveringen",
+    "model-349": "Model 349",
+    "model-349-p": "Samenvattende aangifte van intracommunautaire handelingen (leveringen en verwervingen van goederen en diensten met ondernemingen uit andere EU-lidstaten).",
+    "nif-niva": "NIF \/ NIVA",
+    "operation-key": "Sleutel"
+}
