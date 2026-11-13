@@ -23,6 +23,7 @@ use FacturaScripts\Core\DataSrc\Ejercicios;
 use FacturaScripts\Core\DataSrc\Empresas;
 use FacturaScripts\Core\DataSrc\Paises;
 use FacturaScripts\Core\Tools;
+use FacturaScripts\Dinamic\Lib\Vies;
 
 /**
  * Genera el fichero de texto de ancho fijo para el Modelo 349 (AEAT).
@@ -195,7 +196,7 @@ class Txt349Export
      * Pos  5-8   : ejercicio YYYY
      * Pos  9-17  : NIF declarante (9, derecha, espacios)
      * Pos  18-75 : blancos (58)
-     * Pos  76-92 : NIF operador (17 = 2 codiso + 15 número)
+     * Pos  76-92 : NIF operador (17 = 2 prefijo del NIF-IVA + 15 número)
      * Pos  93-132: nombre/razón social (40, izquierda, espacios)
      * Pos  133   : clave operación (1, E/A/S/I/T/M/H/R/D/C)
      * Pos  134-146: base imponible (13 = 11 enteros + 2 decimales)
@@ -230,22 +231,29 @@ class Txt349Export
     }
 
     /**
-     * Construye el campo NIF del operador comunitario (17 chars = 2 codiso + 15 número).
+     * Construye el campo NIF del operador comunitario (17 chars = 2 prefijo del NIF-IVA + 15 número).
+     * El código de país son las dos primeras letras del NIF-IVA, que coinciden con el código ISO salvo en
+     * Grecia (EL en lugar de GR), según Vies::vatPrefix() del core. Del número se quita tanto el código ISO
+     * como el prefijo del NIF-IVA, y también los espacios, guiones y demás separadores.
      */
     public static function getNifOperador(array $op): string
     {
         $codpais = $op['codpais'] ?? '';
-        $cifnif  = self::sanitize($op['cifnif'] ?? '');
+        $cifnif  = (string)preg_replace('/[^A-Z0-9]/', '', strtoupper(self::sanitize($op['cifnif'] ?? '')));
 
         $pais   = Paises::get($codpais);
         $codiso = strtoupper($pais->codiso ?? '');
+        $prefix = Vies::vatPrefix($codiso);
 
         $nifNum = $cifnif;
-        if (!empty($codiso) && stripos($cifnif, $codiso) === 0) {
-            $nifNum = substr($cifnif, strlen($codiso));
+        foreach (array_unique([$prefix, $codiso]) as $start) {
+            if (!empty($start) && stripos($cifnif, $start) === 0) {
+                $nifNum = substr($cifnif, strlen($start));
+                break;
+            }
         }
 
-        $countryCode = self::formatString($codiso, 2, ' ', STR_PAD_RIGHT);
+        $countryCode = self::formatString($prefix, 2, ' ', STR_PAD_RIGHT);
         $nifPart     = self::formatString($nifNum, 15, ' ', STR_PAD_RIGHT);
 
         return $countryCode . $nifPart;
