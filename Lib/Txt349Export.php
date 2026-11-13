@@ -22,8 +22,8 @@ namespace FacturaScripts\Plugins\Modelo349\Lib;
 use FacturaScripts\Core\DataSrc\Ejercicios;
 use FacturaScripts\Core\DataSrc\Empresas;
 use FacturaScripts\Core\DataSrc\Paises;
-use FacturaScripts\Core\Lib\Vies;
 use FacturaScripts\Core\Tools;
+use FacturaScripts\Dinamic\Lib\Vies;
 
 /**
  * Genera el fichero de texto de ancho fijo para el Modelo 349 (AEAT).
