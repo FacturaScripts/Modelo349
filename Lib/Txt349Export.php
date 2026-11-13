@@ -22,6 +22,7 @@ namespace FacturaScripts\Plugins\Modelo349\Lib;
 use FacturaScripts\Core\DataSrc\Ejercicios;
 use FacturaScripts\Core\DataSrc\Empresas;
 use FacturaScripts\Core\DataSrc\Paises;
+use FacturaScripts\Core\Lib\Vies;
 use FacturaScripts\Core\Tools;
 
 /**
@@ -195,7 +196,7 @@ class Txt349Export
      * Pos  5-8   : ejercicio YYYY
      * Pos  9-17  : NIF declarante (9, derecha, espacios)
      * Pos  18-75 : blancos (58)
-     * Pos  76-92 : NIF operador (17 = 2 codiso + 15 número)
+     * Pos  76-92 : NIF operador (17 = 2 prefijo del NIF-IVA + 15 número)
      * Pos  93-132: nombre/razón social (40, izquierda, espacios)
      * Pos  133   : clave operación (1, E/A/S/I/T/M/H/R/D/C)
      * Pos  134-146: base imponible (13 = 11 enteros + 2 decimales)
@@ -232,8 +233,8 @@ class Txt349Export
     /**
      * Construye el campo NIF del operador comunitario (17 chars = 2 prefijo del NIF-IVA + 15 número).
      * El código de país son las dos primeras letras del NIF-IVA, que coinciden con el código ISO salvo en
-     * Grecia (EL en lugar de GR). Del número se quita tanto el código ISO como el prefijo del NIF-IVA, y también
-     * los espacios, guiones y demás separadores.
+     * Grecia (EL en lugar de GR), según Vies::vatPrefix() del core. Del número se quita tanto el código ISO
+     * como el prefijo del NIF-IVA, y también los espacios, guiones y demás separadores.
      */
     public static function getNifOperador(array $op): string
     {
@@ -242,7 +243,7 @@ class Txt349Export
 
         $pais   = Paises::get($codpais);
         $codiso = strtoupper($pais->codiso ?? '');
-        $prefix = self::vatPrefix($codiso);
+        $prefix = Vies::vatPrefix($codiso);
 
         $nifNum = $cifnif;
         foreach (array_unique([$prefix, $codiso]) as $start) {
@@ -256,15 +257,6 @@ class Txt349Export
         $nifPart     = self::formatString($nifNum, 15, ' ', STR_PAD_RIGHT);
 
         return $countryCode . $nifPart;
-    }
-
-    /**
-     * Prefijo del NIF-IVA a partir del código ISO del país: EL para Grecia (GR) y el propio código para el resto.
-     * Cuando el core tenga Vies::vatPrefix() (PR NeoRazorX/facturascripts#2059) se podrá usar ese.
-     */
-    public static function vatPrefix(string $codiso): string
-    {
-        return $codiso === 'GR' ? 'EL' : $codiso;
     }
 
     /**

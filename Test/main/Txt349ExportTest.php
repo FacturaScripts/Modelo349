@@ -203,9 +203,6 @@ final class Txt349ExportTest extends TestCase
             $result = Txt349Export::getNifOperador(['cifnif' => $cifnif, 'codpais' => 'GRC']);
             $this->assertSame('EL123456789      ', $result, "NIF del operador griego incorrecto para {$cifnif}");
         }
-
-        $this->assertSame('EL', Txt349Export::vatPrefix('GR'));
-        $this->assertSame('DE', Txt349Export::vatPrefix('DE'));
     }
 
     public function testGetNifOperadorAlwaysReturns17Chars(): void
