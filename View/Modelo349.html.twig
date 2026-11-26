@@ -122,6 +122,13 @@ document.getElementById('action349').value = '';
 				</div>
 			</div>
 		</form>
+		{# empresa y año que se declaran: los del ejercicio seleccionado #}
+		{% if fsc.searched and fsc.company and fsc.company.idempresa %}
+			<p class="small text-muted mb-2">
+				<i class="fa-solid fa-building fa-fw"></i>
+				{{ trans('company') }}: {{ fsc.company.nombre }} · {{ trans('year') }}: {{ fsc.year }}
+			</p>
+		{% endif %}
 	</div>
 
 	<ul class="nav nav-tabs" role="tablist">

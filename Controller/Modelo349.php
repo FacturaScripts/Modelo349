@@ -20,21 +20,36 @@
 namespace FacturaScripts\Plugins\Modelo349\Controller;
 
 use FacturaScripts\Core\Base\Controller;
-use FacturaScripts\Core\DataSrc\Ejercicios;
 use FacturaScripts\Core\DataSrc\Empresas;
 use FacturaScripts\Core\DataSrc\Paises;
 use FacturaScripts\Core\Tools;
-use FacturaScripts\Dinamic\Lib\Clave349;
-use FacturaScripts\Dinamic\Lib\Txt349Export;
+use FacturaScripts\Dinamic\Lib\Modelo349 as Modelo349Lib;
+use FacturaScripts\Dinamic\Lib\Modelo349Api;
+use FacturaScripts\Dinamic\Lib\Modelo349File;
+use FacturaScripts\Dinamic\Model\Empresa;
 use FacturaScripts\Dinamic\Model\Serie;
 
 /**
+ * Pantalla del Modelo 349: muestra las operaciones intracomunitarias de la empresa del ejercicio
+ * seleccionado y descarga el TXT para la AEAT. El cálculo está en Lib/Modelo349, compartido con
+ * el endpoint de la API.
+ *
  * @author Esteban Sánchez Martínez <esteban@factura.city>
  */
 class Modelo349 extends Controller
 {
     /** @var string */
     public $codejercicio;
+
+    /** @var string */
+    public $codserie = '';
+
+    /**
+     * Empresa declarante: la del ejercicio seleccionado.
+     *
+     * @var Empresa|null
+     */
+    public $company;
 
     /** @var string */
     public $declarationType = '';
@@ -60,11 +75,15 @@ class Modelo349 extends Controller
     /** @var array */
     public $salesTotals = ['total' => 0.0];
 
-    /** @var string */
-    public $codserie = '';
-
     /** @var bool */
     public $searched = false;
+
+    /**
+     * Año declarado: el de la fecha de inicio del ejercicio seleccionado.
+     *
+     * @var int
+     */
+    public $year = 0;
 
     public function getCompanies(): array
     {
@@ -75,27 +94,6 @@ class Modelo349 extends Controller
     {
         $pais = Paises::get($codpais);
         return $pais->nombre ?? $codpais;
-    }
-
-    public function getSeries(): array
-    {
-        $serie = new Serie();
-        $list = ['' => Tools::trans('all')];
-        foreach ($serie->all([], ['codserie' => 'ASC']) as $s) {
-            $list[$s->codserie] = $s->codserie . ' - ' . $s->descripcion;
-        }
-        return $list;
-    }
-
-    public function getEjercicios(): array
-    {
-        $list = [];
-        $year = (int)date('Y');
-        for ($i = 0; $i < 5; $i++) {
-            $value = (string)($year - $i);
-            $list[$value] = $value;
-        }
-        return $list;
     }
 
     public function getPageData(): array
@@ -130,12 +128,31 @@ class Modelo349 extends Controller
         ];
     }
 
+    public function getSeries(): array
+    {
+        $serie = new Serie();
+        $list = ['' => Tools::trans('all')];
+        foreach ($serie->all([], ['codserie' => 'ASC']) as $s) {
+            $list[$s->codserie] = $s->codserie . ' - ' . $s->descripcion;
+        }
+        return $list;
+    }
+
+    /**
+     * Lee los filtros del formulario y calcula los datos o descarga el TXT.
+     *
+     * @param mixed $response
+     * @param mixed $user
+     * @param mixed $permissions
+     */
     public function privateCore(&$response, $user, $permissions)
     {
         parent::privateCore($response, $user, $permissions);
 
-        $this->codejercicio = $this->request->input('codejercicio', date('Y'));
-        $this->periodo = $this->request->input('periodo', $this->getDefaultPeriod());
+        // el ejercicio determina la empresa y el año declarados
+        $this->codejercicio = $this->request->input('codejercicio', Modelo349Lib::getDefaultExercise());
+        // admite también el formato de la API (T1-T4) y descarta los periodos no válidos
+        $this->periodo = Modelo349Api::screenPeriod($this->request->input('periodo'), $this->getDefaultPeriod());
         $this->codserie = $this->request->input('codserie', '');
 
         $this->declarationType = $this->request->input('declarationtype', '');
@@ -158,19 +175,23 @@ class Modelo349 extends Controller
         }
     }
 
+    /**
+     * Descarga el TXT para la AEAT con el año y la empresa del ejercicio seleccionado.
+     */
     protected function downloadTxt(): void
     {
         $this->setTemplate(false);
 
         $fileName = 'modelo_349_' . $this->codejercicio . '_' . $this->periodo . '.349';
-        $content = Txt349Export::export(
-            (int)$this->codejercicio,
+        $content = Modelo349File::generate(
+            $this->year,
             $this->periodo,
             $this->salesData,
             $this->purchasesData,
             $this->justificante,
             $this->declarationType,
-            $this->justificanteAnterior
+            $this->justificanteAnterior,
+            $this->company->idempresa ?? null
         );
 
         $this->response
@@ -190,106 +211,25 @@ class Modelo349 extends Controller
         return '4T';
     }
 
-    protected function getEuCountriesIn(): string
-    {
-        $codes = [
-            'AUT', 'BEL', 'BGR', 'CYP', 'CZE', 'DEU', 'DNK', 'EST', 'FIN', 'FRA',
-            'GRC', 'HRV', 'HUN', 'IRL', 'ITA', 'LTU', 'LUX', 'LVA', 'MLT', 'NLD',
-            'POL', 'PRT', 'ROU', 'SWE', 'SVN', 'SVK',
-        ];
-        return implode(', ', array_map(fn($c) => $this->dataBase->var2str($c), $codes));
-    }
-
+    /**
+     * Calcula los operadores intracomunitarios de la empresa del ejercicio en el periodo seleccionado
+     * y muestra los avisos (empresa sin teléfono o administrador, periodo sin operaciones).
+     */
     protected function loadData(): void
     {
         $this->searched = true;
 
-        $year = (int)$this->codejercicio;
-
-        $exercise = Ejercicios::get((string)$year);
-        $company = Empresas::get($exercise->idempresa ?? 1);
-        if (empty($company->telefono1)) {
-            Tools::log()->warning('company-phone-no-data', ['%company%' => $company->nombre]);
-        }
-        if (empty($company->administrador)) {
-            Tools::log()->warning('company-admin-no-data', ['%company%' => $company->nombre]);
-        }
-
-        $dates = Txt349Export::getPeriodDates($this->periodo, $year);
-        $euIn = $this->getEuCountriesIn();
-
-        $this->salesData = $this->queryOperators(
-            'facturascli', 'clientes', 'codcliente', 'idcontactofact', $dates, $euIn, true
-        );
-        $this->purchasesData = $this->queryOperators(
-            'facturasprov', 'proveedores', 'codproveedor', 'idcontacto', $dates, $euIn, false
-        );
+        $result = Modelo349Lib::calculate((string)$this->codejercicio, (string)$this->periodo, (string)$this->codserie);
+        $this->company = $result['company'];
+        $this->year = $result['year'];
+        $this->salesData = $result['sales'];
+        $this->purchasesData = $result['purchases'];
 
         $this->salesTotals = ['total' => array_sum(array_column($this->salesData, 'base'))];
         $this->purchasesTotals = ['total' => array_sum(array_column($this->purchasesData, 'base'))];
 
-        if (empty($this->salesData) && empty($this->purchasesData)) {
-            Tools::log()->warning('349-no-data');
+        foreach ($result['warnings'] as $warning) {
+            Tools::log()->warning($warning['key'], $warning['context']);
         }
-    }
-
-    /**
-     * Obtiene los operadores intracomunitarios del periodo, acumulados por operador y clave de operación.
-     * Solo se incluyen las facturas cuya operación es intracomunitaria (bienes o servicios),
-     * ya que la clave se deduce del campo operacion de la factura.
-     *
-     * @param string $facturasTable Tabla de facturas (facturascli o facturasprov).
-     * @param string $terceroTable Tabla del tercero (clientes o proveedores).
-     * @param string $codField Campo que relaciona la factura con el tercero.
-     * @param string $contactField Campo del tercero con el contacto del que se toma el país.
-     * @param array $dates Fechas de inicio ('from') y fin ('to') del periodo.
-     * @param string $euIn Lista SQL de países de la UE.
-     * @param bool $esVenta true para ventas, false para compras.
-     * @return array
-     */
-    protected function queryOperators(
-        string $facturasTable,
-        string $terceroTable,
-        string $codField,
-        string $contactField,
-        array $dates,
-        string $euIn,
-        bool $esVenta
-    ): array {
-        $operaciones = array_map(
-            fn($operacion) => $this->dataBase->var2str($operacion),
-            Clave349::operaciones($esVenta)
-        );
-
-        $sql = 'SELECT t.cifnif, t.razonsocial, ct.codpais, f.operacion, SUM(f.neto) AS base'
-            . ' FROM ' . $facturasTable . ' f'
-            . ' INNER JOIN ' . $terceroTable . ' t ON t.' . $codField . ' = f.' . $codField
-            . ' LEFT JOIN contactos ct ON ct.idcontacto = t.' . $contactField
-            . ' WHERE f.fecha >= ' . $this->dataBase->var2str($dates['from'])
-            . ' AND f.fecha <= ' . $this->dataBase->var2str($dates['to'])
-            . ' AND f.editable = ' . $this->dataBase->var2str(false)
-            . ' AND f.operacion IN (' . implode(', ', $operaciones) . ')'
-            . ' AND ct.codpais IN (' . $euIn . ')'
-            . ' AND t.cifnif IS NOT NULL AND t.cifnif <> \'\'';
-
-        if (!empty($this->codserie)) {
-            $sql .= ' AND f.codserie = ' . $this->dataBase->var2str($this->codserie);
-        }
-
-        $sql .= ' GROUP BY t.cifnif, t.razonsocial, ct.codpais, f.operacion'
-            . ' HAVING SUM(f.neto) > 0'
-            . ' ORDER BY t.cifnif ASC, f.operacion ASC;';
-
-        $result = [];
-        foreach ($this->dataBase->select($sql) as $row) {
-            $result[] = [
-                'cifnif'  => $row['cifnif'],
-                'nombre'  => $row['razonsocial'],
-                'codpais' => $row['codpais'],
-                'base'    => round((float)$row['base'], 2),
-                'clave'   => Clave349::porOperacion($esVenta, $row['operacion']),
-            ];
-        }
-        return $result;
     }
 }

@@ -31,87 +31,8 @@ use FacturaScripts\Dinamic\Lib\Vies;
  *
  * @author Esteban Sánchez Martínez <esteban@factura.city>
  */
-class Txt349Export
+class Modelo349File
 {
-    /**
-     * Punto de entrada principal. Devuelve el contenido del fichero en ISO-8859-1.
-     *
-     * @param int    $year
-     * @param string $periodo          '1T'|'2T'|'3T'|'4T'|'01'-'12'
-     * @param array  $salesData        Ventas intracomunitarias (clave E entregas de bienes, S prestaciones de servicios)
-     * @param array  $purchasesData    Compras intracomunitarias (clave A adquisiciones de bienes, I de servicios)
-     * @param string $justificante     Número de 13 dígitos; si vacío se genera automáticamente
-     * @param string $declarationType  ''|'C'|'S'
-     * @param string $justificanteAnterior
-     * @return string
-     */
-    public static function export(
-        int $year,
-        string $periodo,
-        array $salesData,
-        array $purchasesData,
-        string $justificante = '',
-        string $declarationType = '',
-        string $justificanteAnterior = ''
-    ): string {
-        $exercise = Ejercicios::get((string)$year);
-        $company = Empresas::get($exercise->idempresa ?? 1);
-
-        if (empty($justificante)) {
-            $justificante = '349' . $year . '000001';
-        }
-
-        $operators = array_merge($salesData, $purchasesData);
-        $totalBase = array_sum(array_column($salesData, 'base'))
-                   + array_sum(array_column($purchasesData, 'base'));
-
-        $content = self::buildTipo1(
-            $year,
-            $company,
-            $periodo,
-            count($operators),
-            $totalBase,
-            $justificante,
-            $declarationType,
-            $justificanteAnterior
-        );
-
-        $nifDeclarante = self::sanitize($company->cifnif ?? '');
-        foreach ($operators as $op) {
-            $content .= self::buildTipo2($year, $nifDeclarante, $op);
-        }
-
-        return mb_convert_encoding($content, 'ISO-8859-1', 'UTF-8');
-    }
-
-    /**
-     * Calcula las fechas de inicio y fin para el período dado.
-     */
-    public static function getPeriodDates(string $periodo, int $year): array
-    {
-        switch ($periodo) {
-            case '1T':
-                return ['from' => '01-01-' . $year, 'to' => '31-03-' . $year];
-            case '2T':
-                return ['from' => '01-04-' . $year, 'to' => '30-06-' . $year];
-            case '3T':
-                return ['from' => '01-07-' . $year, 'to' => '30-09-' . $year];
-            case '4T':
-                return ['from' => '01-10-' . $year, 'to' => '31-12-' . $year];
-            default:
-                $month = (int)$periodo;
-                if ($month < 1 || $month > 12) {
-                    $month = 1;
-                }
-                $isoFrom = sprintf('%04d-%02d-01', $year, $month);
-                $lastDay = date('d', strtotime('last day of ' . $isoFrom));
-                return [
-                    'from' => sprintf('%02d-%02d-%04d', 1, $month, $year),
-                    'to' => sprintf('%s-%02d-%04d', $lastDay, $month, $year),
-                ];
-        }
-    }
-
     /**
      * Registro tipo 1: declarante (500 posiciones + CRLF).
      *
@@ -231,32 +152,60 @@ class Txt349Export
     }
 
     /**
-     * Construye el campo NIF del operador comunitario (17 chars = 2 prefijo del NIF-IVA + 15 número).
-     * El código de país son las dos primeras letras del NIF-IVA, que coinciden con el código ISO salvo en
-     * Grecia (EL en lugar de GR), según Vies::vatPrefix() del core. Del número se quita tanto el código ISO
-     * como el prefijo del NIF-IVA, y también los espacios, guiones y demás separadores.
+     * Punto de entrada principal. Devuelve el contenido del fichero en ISO-8859-1.
+     *
+     * @param int      $year                 Año declarado (el de la fecha de inicio del ejercicio, no su código)
+     * @param string   $periodo              '1T'|'2T'|'3T'|'4T'|'01'-'12'
+     * @param array    $salesData            Ventas intracomunitarias (clave E entregas de bienes, S prestaciones de servicios)
+     * @param array    $purchasesData        Compras intracomunitarias (clave A adquisiciones de bienes, I de servicios)
+     * @param string   $justificante         Número de 13 dígitos; si vacío se genera automáticamente
+     * @param string   $declarationType      ''|'C'|'S'
+     * @param string   $justificanteAnterior Número de justificante de la declaración anterior
+     * @param int|null $idempresa            Empresa declarante; si no se indica, la del ejercicio cuyo código es el año
+     * @return string
      */
-    public static function getNifOperador(array $op): string
-    {
-        $codpais = $op['codpais'] ?? '';
-        $cifnif  = (string)preg_replace('/[^A-Z0-9]/', '', strtoupper(self::sanitize($op['cifnif'] ?? '')));
+    public static function generate(
+        int $year,
+        string $periodo,
+        array $salesData,
+        array $purchasesData,
+        string $justificante = '',
+        string $declarationType = '',
+        string $justificanteAnterior = '',
+        ?int $idempresa = null
+    ): string {
+        if (empty($idempresa)) {
+            // compatibilidad: sin empresa, se toma la del ejercicio cuyo código coincide con el año
+            $exercise = Ejercicios::get((string)$year);
+            $idempresa = $exercise->idempresa ?? 1;
+        }
+        $company = Empresas::get($idempresa);
 
-        $pais   = Paises::get($codpais);
-        $codiso = strtoupper($pais->codiso ?? '');
-        $prefix = Vies::vatPrefix($codiso);
-
-        $nifNum = $cifnif;
-        foreach (array_unique([$prefix, $codiso]) as $start) {
-            if (!empty($start) && stripos($cifnif, $start) === 0) {
-                $nifNum = substr($cifnif, strlen($start));
-                break;
-            }
+        if (empty($justificante)) {
+            $justificante = '349' . $year . '000001';
         }
 
-        $countryCode = self::formatString($prefix, 2, ' ', STR_PAD_RIGHT);
-        $nifPart     = self::formatString($nifNum, 15, ' ', STR_PAD_RIGHT);
+        $operators = array_merge($salesData, $purchasesData);
+        $totalBase = array_sum(array_column($salesData, 'base'))
+                   + array_sum(array_column($purchasesData, 'base'));
 
-        return $countryCode . $nifPart;
+        $content = self::buildTipo1(
+            $year,
+            $company,
+            $periodo,
+            count($operators),
+            $totalBase,
+            $justificante,
+            $declarationType,
+            $justificanteAnterior
+        );
+
+        $nifDeclarante = self::sanitize($company->cifnif ?? '');
+        foreach ($operators as $op) {
+            $content .= self::buildTipo2($year, $nifDeclarante, $op);
+        }
+
+        return mb_convert_encoding($content, 'ISO-8859-1', 'UTF-8');
     }
 
     /**
@@ -286,6 +235,63 @@ class Txt349Export
         }
 
         return str_pad($string, $length, $padChar, $align);
+    }
+
+    /**
+     * Construye el campo NIF del operador comunitario (17 chars = 2 prefijo del NIF-IVA + 15 número).
+     * El código de país son las dos primeras letras del NIF-IVA, que coinciden con el código ISO salvo en
+     * Grecia (EL en lugar de GR), según Vies::vatPrefix() del core. Del número se quita tanto el código ISO
+     * como el prefijo del NIF-IVA, y también los espacios, guiones y demás separadores.
+     */
+    public static function getNifOperador(array $op): string
+    {
+        $codpais = $op['codpais'] ?? '';
+        $cifnif  = (string)preg_replace('/[^A-Z0-9]/', '', strtoupper(self::sanitize($op['cifnif'] ?? '')));
+
+        $pais   = Paises::get($codpais);
+        $codiso = strtoupper($pais->codiso ?? '');
+        $prefix = Vies::vatPrefix($codiso);
+
+        $nifNum = $cifnif;
+        foreach (array_unique([$prefix, $codiso]) as $start) {
+            if (!empty($start) && stripos($cifnif, $start) === 0) {
+                $nifNum = substr($cifnif, strlen($start));
+                break;
+            }
+        }
+
+        $countryCode = self::formatString($prefix, 2, ' ', STR_PAD_RIGHT);
+        $nifPart     = self::formatString($nifNum, 15, ' ', STR_PAD_RIGHT);
+
+        return $countryCode . $nifPart;
+    }
+
+    /**
+     * Calcula las fechas de inicio y fin para el período dado.
+     */
+    public static function getPeriodDates(string $periodo, int $year): array
+    {
+        switch ($periodo) {
+            case '1T':
+                return ['from' => '01-01-' . $year, 'to' => '31-03-' . $year];
+            case '2T':
+                return ['from' => '01-04-' . $year, 'to' => '30-06-' . $year];
+            case '3T':
+                return ['from' => '01-07-' . $year, 'to' => '30-09-' . $year];
+            case '4T':
+                return ['from' => '01-10-' . $year, 'to' => '31-12-' . $year];
+            default:
+                $month = (int)$periodo;
+                if ($month < 1 || $month > 12) {
+                    $month = 1;
+                }
+                $isoFrom = sprintf('%04d-%02d-01', $year, $month);
+                $lastDay = date('d', strtotime('last day of ' . $isoFrom));
+                return [
+                    'from' => sprintf('%02d-%02d-%04d', 1, $month, $year),
+                    'to' => sprintf('%s-%02d-%04d', $lastDay, $month, $year),
+                ];
+        }
     }
 
     /**
