@@ -1,0 +1,72 @@
+{
+ "nuevos": [],
+ "modificados": [],
+ "iguales": 12,
+ "errores": [
+  [
+   "https://www.agenciatributaria.es/static_files/AEAT_Desarrolladores/EEDD/Informativas/Especificaciones_Modelos/2025/espec_349_2026.pdf",
+   "000",
+   "curl: (60) SSL certificate problem: self signed certificate in certificate chain\nMore details here: https://curl.se/docs/sslcerts.html\n\ncurl failed to verify the legitimacy of the server and therefore could not\nestablish a secure connection to it. To learn more about this situation and\nhow to fix it, please visit the web page mentioned above."
+  ],
+  [
+   "https://www.agenciatributaria.es/static_files/AEAT_Desarrolladores/EEDD/Informativas/Especificaciones_Modelos/2025/Espec-349-2025.pdf",
+   "000",
+   "curl: (60) SSL certificate problem: self signed certificate in certificate chain\nMore details here: https://curl.se/docs/sslcerts.html\n\ncurl failed to verify the legitimacy of the server and therefore could not\nestablish a secure connection to it. To learn more about this situation and\nhow to fix it, please visit the web page mentioned above."
+  ],
+  [
+   "https://www.agenciatributaria.es/static_files/AEAT_Desarrolladores/EEDD/Informativas/Especificaciones_Modelos/2026/Anexo-errores-26/PAIN-M349_2026.xml",
+   "000",
+   "curl: (60) SSL certificate problem: self signed certificate in certificate chain\nMore details here: https://curl.se/docs/sslcerts.html\n\ncurl failed to verify the legitimacy of the server and therefore could not\nestablish a secure connection to it. To learn more about this situation and\nhow to fix it, please visit the web page mentioned above."
+  ],
+  [
+   "https://www.agenciatributaria.es/static_files/AEAT_Desarrolladores/EEDD/Informativas/Especificaciones_Modelos/2027/Anexo-errores-27/PAIN-M349_2027.xml",
+   "000",
+   "curl: (60) SSL certificate problem: self signed certificate in certificate chain\nMore details here: https://curl.se/docs/sslcerts.html\n\ncurl failed to verify the legitimacy of the server and therefore could not\nestablish a secure connection to it. To learn more about this situation and\nhow to fix it, please visit the web page mentioned above."
+  ],
+  [
+   "https://www.agenciatributaria.es/static_files/AEAT_Desarrolladores/EEDD/Informativas/2020/espes349e20v10.pdf",
+   "000",
+   "curl: (60) SSL certificate problem: self signed certificate in certificate chain\nMore details here: https://curl.se/docs/sslcerts.html\n\ncurl failed to verify the legitimacy of the server and therefore could not\nestablish a secure connection to it. To learn more about this situation and\nhow to fix it, please visit the web page mentioned above."
+  ],
+  [
+   "https://www.agenciatributaria.es/static_files/AEAT_Desarrolladores/EEDD/Informativas/General/Especificaciones_TGVI_Online.pdf",
+   "000",
+   "curl: (60) SSL certificate problem: self signed certificate in certificate chain\nMore details here: https://curl.se/docs/sslcerts.html\n\ncurl failed to verify the legitimacy of the server and therefore could not\nestablish a secure connection to it. To learn more about this situation and\nhow to fix it, please visit the web page mentioned above."
+  ],
+  [
+   "https://www.agenciatributaria.es/static_files/AEAT_Desarrolladores/EEDD/General/EspecificacionesServiciosDeclaracionesAEAT_ES.pdf",
+   "000",
+   "curl: (60) SSL certificate problem: self signed certificate in certificate chain\nMore details here: https://curl.se/docs/sslcerts.html\n\ncurl failed to verify the legitimacy of the server and therefore could not\nestablish a secure connection to it. To learn more about this situation and\nhow to fix it, please visit the web page mentioned above."
+  ],
+  [
+   "https://www.agenciatributaria.es/static_files/AEAT_Desarrolladores/EEDD/General/consultas.xsd",
+   "000",
+   "curl: (60) SSL certificate problem: self signed certificate in certificate chain\nMore details here: https://curl.se/docs/sslcerts.html\n\ncurl failed to verify the legitimacy of the server and therefore could not\nestablish a secure connection to it. To learn more about this situation and\nhow to fix it, please visit the web page mentioned above."
+  ]
+ ],
+ "paginas_cambiadas": [],
+ "paginas_nuevas": [
+  "ayuda_consultas-informaticas_declaraciones-infor-ac1adb99.md",
+  "ayuda_consultas-informaticas_declaraciones-infor-160cbf3f.md",
+  "ayuda_consultas-informaticas_declaraciones-infor-f81beece.md"
+ ],
+ "paginas_desaparecidas": [],
+ "enlaces": {},
+ "actualizada": {
+  "procedimientoini_GI28.md": "Página actualizada: 16/noviembre/2026",
+  "ayuda_consultas-informaticas_declaraciones-infor-8496e3ee.md": "Página actualizada: 09/enero/2026",
+  "ayuda_consultas-informaticas_declaraciones-infor-c6bac167.md": "Página actualizada: 20/noviembre/2026",
+  "ayuda_consultas-informaticas_declaraciones-infor-0a2a021b.md": "Página actualizada: 20/noviembre/2026",
+  "ayuda_consultas-informaticas_declaraciones-infor-7fe5fa13.md": "Página actualizada: 19/noviembre/2026",
+  "ayuda_consultas-informaticas_declaraciones-infor-fd3752de.md": "Página actualizada: 09/enero/2026",
+  "ayuda_consultas-informaticas_declaraciones-infor-ac1adb99.md": "Página actualizada: 19/noviembre/2026",
+  "ayuda_consultas-informaticas_declaraciones-infor-160cbf3f.md": "Página actualizada: 09/enero/2026",
+  "ayuda_consultas-informaticas_declaraciones-infor-f81beece.md": "Página actualizada: 09/enero/2026",
+  "ayuda_consultas-informaticas_presentacion-declar-d437dede.md": "Página actualizada: 19/noviembre/2026",
+  "todas-gestiones_impuestos-tasas_declaraciones-in-3bc1e271.md": "Página actualizada: 08/septiembre/2026",
+  "impuestos-tasas_declaraciones-informativas_model-ba27c878.md": "Página actualizada: 08/septiembre/2026",
+  "impuestos-tasas_declaraciones-informativas_model-a715cd19.md": "Página actualizada: 09/junio/2026",
+  "ayuda_disenos-registro_modelos-300-399.md": "Página actualizada: 26/octubre/2026"
+ },
+ "nombres_largos": []
+}

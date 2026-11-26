@@ -1,0 +1,1752 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes" ?>
+<ERROR>
+	<CODIGO COD="00000" TIPO="I">
+		<IDIOMA>
+			<DESC>No existen errores.</DESC>
+			<Error_Warning>I</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10201" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido improcedente en el campo Nif del Representante legal</DESC>
+			<campoError>T1_NIF_REPRESENTANTE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10301" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en Ejercicio.</DESC>
+			<campoError>T2_EJERCICIO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10301A" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido no numérico en Ejercicio.</DESC>
+			<campoError>T1_EJERCICIO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10401" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en NIF Declarante.</DESC>
+			<campoError>T1_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10401V" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en el campo NIF del Declarante.</DESC>
+			<campoError>T1_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10403" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo NIF del Declarante.</DESC>
+			<campoError>T1_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10499" TIPO="E">
+		<IDIOMA>
+			<DESC>Declarante sin registros de operaciones intracomunitarias ni de rectificaciones de operaciones correctos.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10500" TIPO="E">
+		<IDIOMA>
+			<DESC>El NIF del Representante legal no puede coincidir con el NIF del Declarante.</DESC>
+			<campoError>T1_NIF_REPRESENTANTE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10501" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en el campo Apellidos y nombre, razón social o denominación del Declarante.</DESC>
+			<campoError>T1_NOMBRE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10503" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Apellidos y nombre, razón social o denominación del Declarante.</DESC>
+			<campoError>T1_NOMBRE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10519" TIPO="E">
+		<IDIOMA>
+			<DESC>La declaración indicada que desea complementar no existe o no cumple la condición de ser del mismo NIF, nombre, modelo y ejercicio.</DESC>
+			<campoError>T1_JUSTIFICANTE_ANTERIOR</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10601" TIPO="E">
+		<IDIOMA>
+			<DESC>Tipo de soporte INCORRECTO</DESC>
+			<campoError>T1_SOPORTE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10701" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en el campo Teléfono de contacto</DESC>
+			<campoError>T1_RELACION_TLF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10701C" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en el campo Teléfono de contacto.</DESC>
+			<campoError>T1_RELACION_TLF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10703" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Teléfono de contacto.</DESC>
+			<campoError>T1_RELACION_TLF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10801" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en el campo Apellidos y nombre de persona con quien relacionarse</DESC>
+			<campoError>T1_RELACION_NOMBRE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="10803" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Apellidos y nombre de la persona con quien relacionarse.</DESC>
+			<campoError>T1_RELACION_NOMBRE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="11202" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido improcedente en Número identificativo de la declaración anterior</DESC>
+			<campoError>T1_JUSTIFICANTE_ANTERIOR</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="11202A" TIPO="E">
+		<IDIOMA>
+			<DESC>Si es una declaración sustitutiva debe consignarse el Nº identificativo de la declaración anterior</DESC>
+			<campoError>T1_JUSTIFICANTE_ANTERIOR</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="11301" TIPO="E">
+		<IDIOMA>
+			<DESC>Periodo incorrecto o sin contenido</DESC>
+			<campoError>T1_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="11410" TIPO="E">
+		<IDIOMA>
+			<DESC>Número de registros de operaciones es mayor que Número total de operadores intracomunitarios</DESC>
+			<campoError>T1_TOTAL_OPERACIONES</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="11511" TIPO="E">
+		<IDIOMA>
+			<DESC>Descuadre entre suma importes en los registros tipo 2 y Total Operaciones.</DESC>
+			<campoError>T1_TOTAL_OPERADORES</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="11601" TIPO="E">
+		<IDIOMA>
+			<DESC>Total de operadores intracomunitarios con rectificación INCORRECTO</DESC>
+			<campoError>T1_TOTAL_OPERADORES_RECTIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="11601V" TIPO="E">
+		<IDIOMA>
+			<DESC>Total de operadores intracomunitarios con rectificación INCORRECTO</DESC>
+			<campoError>T1_TOTAL_OPERADORES_RECTIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="11603" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Total de operadores intracomunitarios con rectificación.</DESC>
+			<campoError>T1_TOTAL_OPERADORES_RECTIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20201" TIPO="E">
+		<IDIOMA>
+			<DESC>Modelo DISTINTO de 349</DESC>
+			<campoError>T2_MODELO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20304" TIPO="E">
+		<IDIOMA>
+			<DESC>Ejercicio distinto de 2015</DESC>
+			<campoError>T2_EJERCICIO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20500" TIPO="E">
+		<IDIOMA>
+			<DESC>Registro tipo operación o rectificación sin registro tipo declarante</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20502" TIPO="E">
+		<IDIOMA>
+			<DESC>Registro tipo declarante debe ser único</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20601" TIPO="E">
+		<IDIOMA>
+			<DESC>Código de País NO ALFABÉTICO.</DESC>
+			<campoError>T2_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="206011" TIPO="W">
+		<IDIOMA>
+			<DESC>Caracteres no válidos en Código de País. Se sustituyen.</DESC>
+			<campoError>T2_PAIS</campoError>
+			<Error_Warning>W</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20601B" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido no alfabético en País.</DESC>
+			<campoError>T2_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20601B1" TIPO="W">
+		<IDIOMA>
+			<DESC>Contenido no alfabético en País. Se sustituyen.</DESC>
+			<campoError>T2_PAIS</campoError>
+			<Error_Warning>W</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20601V" TIPO="E">
+		<IDIOMA>
+			<DESC>Código de País INCORRECTO</DESC>
+			<campoError>T2_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20602" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido improcedente en País.</DESC>
+			<campoError>T2_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20603" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Código País.</DESC>
+			<campoError>T2_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20604" TIPO="E">
+		<IDIOMA>
+			<DESC>Si Código País es igual XI, Clave de operación debe ser distinto de S o I.</DESC>
+			<campoError>T2_CLAVE_CODIGO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702A" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Alemania deben ser 9 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702AA" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Irlanda del Norte deben ser 5, 9 ó 12 caracteres alfanuméricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702B" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Austria deben ser 9 caracteres alfanuméricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702C" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Bélgica deben ser 10 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702D" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Dinamarca deben ser 8 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702E" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Finlandia deben ser 8 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702F" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Francia deben ser 11 caracteres alfanuméricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702G" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Grecia deben ser 9 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702H" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Reino Unido deben ser 5, 9 ó 12 caracteres alfanuméricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702I" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Países Bajos deben ser 12 caracteres alfanuméricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702II" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Croacia deben ser 11 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702J" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Italia deben ser 11 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702K" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Irlanda deben ser 8 ó 9 caracteres alfanuméricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702L" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Luxemburgo deben ser 8 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702M" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Portugal deben ser 9 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702N" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Suecia deben ser 12 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702O" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Chipre deben ser 9 caracteres alfanuméricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702P" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Eslovenia deben ser 8 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702Q" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Estonia deben ser 9 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702R" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Hungría deben ser 8 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702S" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Letonia deben ser 11 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702T" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Lituania deben ser 9 ó 12 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702U" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Malta deben ser 8 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702V" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Polonia deben ser 10 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702W" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de República Checa deben ser 8, 9 ó 10 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702X" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de República Eslovaca deben ser 10 caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702Y" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Bulgaria deben ser 9 ó 10  caracteres numéricos</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20702Z" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Rumanía deben ser 2 a 10  caracteres numéricos sin ceros por la izquierda.</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20703" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo NIF del operador intracomunitario.</DESC>
+			<campoError>T2_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20803" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Apellidos y nombre, razón social o denominación del operador intracomunitario.</DESC>
+			<campoError>T2_NOMBRE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20901" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en el campo Clave Operación.</DESC>
+			<campoError>T2_CLAVE_CODIGO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="20903" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Clave de Operación.</DESC>
+			<campoError>T2_CLAVE_CODIGO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="21003" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Base imponible.</DESC>
+			<campoError>T2_BASE_IMPONIBLE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="22601" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en el campo NIF Representante legal.</DESC>
+			<campoError>T1_NIF_REPRESENTANTE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="22701" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en el campo Apellidos y Nombre del Declarante</DESC>
+			<campoError>T1_NOMBRE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30401C" TIPO="E">
+		<IDIOMA>
+			<DESC>Caracteres no válidos en NIF de declarante.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30401C1" TIPO="W">
+		<IDIOMA>
+			<DESC>Caracteres no válidos en NIF Declarante. Se sustituyen</DESC>
+			<Error_Warning>W</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30601" TIPO="E">
+		<IDIOMA>
+			<DESC>Código de país NO ALFABETICO</DESC>
+			<campoError>T3_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30601V" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en el campo Código de País</DESC>
+			<campoError>T3_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30603" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Código de País.</DESC>
+			<campoError>T3_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30650" TIPO="E">
+		<IDIOMA>
+			<DESC>No se pueden realizar rectificaciones de operaciones con el periodo seleccionado y ejercicio de rectificación inferior a 2010</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30652" TIPO="E">
+		<IDIOMA>
+			<DESC>No se pueden realizar rectificaciones de operaciones, contempladas bajo las claves S o I, devengadas con anterioridad a 2010</DESC>
+			<campoError>T3_RECTI_CLAVE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30653" TIPO="E">
+		<IDIOMA>
+			<DESC>No se pueden realizar rectificaciones de operaciones, contempladas bajo las claves M o H, devengadas con anterioridad al 1 de Julio de 2011.</DESC>
+			<campoError>T3_CLAVE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30654" TIPO="E">
+		<IDIOMA>
+			<DESC>No se pueden realizar rectificaciones de operaciones, contempladas bajo las claves M o H, devengadas con anterioridad al 1 de Julio de 2011.</DESC>
+			<campoError>T3_RECTI_CLAVE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30655" TIPO="E">
+		<IDIOMA>
+			<DESC>No se pueden realizar rectificaciones de operaciones, devengadas con posterioridad 2020, si código país es Reino Unido</DESC>
+			<campoError>T3_RECTI_EJERCICIO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30657" TIPO="E">
+		<IDIOMA>
+			<DESC>Si ejercicio es anterior a 2021, Código País no puede ser XI</DESC>
+			<campoError>T3_RECTI_EJERCICIO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30658" TIPO="E">
+		<IDIOMA>
+			<DESC>Si ejercicio es posterior a 2020 y Código País es igual a GB o XI, Clave de operación debe ser distinto de S o I</DESC>
+			<campoError>T3_CLAVE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702A" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Alemania deben ser 9 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702AA" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Irlanda del Norte deben ser 5, 9 ó 12 caracteres alfanuméricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702B" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Austria deben ser 9 caracteres alfanuméricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702C" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Bélgica deben ser 10 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702D" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Dinamarca deben ser 8 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702E" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Finlandia deben ser 8 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702F" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Francia deben ser 11 caracteres alfanuméricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702G" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Grecia deben ser 9 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702H" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Reino Unido deben ser 5, 9 ó 12 caracteres alfanuméricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702I" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Países Bajos deben ser 12 caracteres alfanuméricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702II" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Croacia deben ser 11 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702J" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Italia deben ser 11 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702K" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Irlanda deben ser 8 ó 9 caracteres alfanuméricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702L" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Luxemburgo deben ser 8 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702M" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Portugal deben ser 9 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702N" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Suecia deben ser 12 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702O" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Chipre deben ser 9 caracteres alfanuméricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702P" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Eslovenia deben ser 8 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702Q" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Estonia deben ser 9 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702R" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Hungría deben ser 8 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702S" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Letonia deben ser 11 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702T" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Lituania deben ser 9 ó 12 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702U" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Malta deben ser 8 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702V" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Polonia deben ser 10 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702W" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de República Checa deben ser 8, 9 ó 10 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702X" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de República Eslovaca deben ser 10 caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702Y" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Bulgaria deben ser 9 ó 10  caracteres numéricos</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30702Z" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Rumanía deben ser 2 a 10  caracteres numéricos sin ceros por la izquierda.</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30703" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo NIF del operador intracomunitario.</DESC>
+			<campoError>T3_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30803" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Apellidos y nombre, razón social o denominación del operador intracomunitario.</DESC>
+			<campoError>T3_NOMBRE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30901" TIPO="E">
+		<IDIOMA>
+			<DESC>Clave Operación INCORRECTO</DESC>
+			<campoError>T3_CLAVE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="30903" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Clave Operación.</DESC>
+			<campoError>T3_CLAVE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31101" TIPO="E">
+		<IDIOMA>
+			<DESC>Ejercicio incorrecto: las rectificaciones de operaciones no pueden ser anteriores a %1 ni posteriores al ejercicio de la declaración.</DESC>
+			<campoError>T3_RECTI_EJERCICIO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31101V" TIPO="E">
+		<IDIOMA>
+			<DESC>Ejercicio incorrecto: las rectificaciones de operaciones no pueden ser anteriores a 2010 ni posteriores al ejercicio de la declaración.</DESC>
+			<campoError>T3_RECTI_EJERCICIO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31103" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Ejercicio.</DESC>
+			<campoError>T3_RECTI_EJERCICIO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31201" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Periodo.</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31201C" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en el campo Periodo</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31201V" TIPO="E">
+		<IDIOMA>
+			<DESC>Periodo INCORRECTO</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31202" TIPO="E">
+		<IDIOMA>
+			<DESC>El Ejercicio y Período al que hace referencia la rectificación son posteriores a los correspondientes a la obtención seleccionada.</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31203" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Período.</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31205" TIPO="E">
+		<IDIOMA>
+			<DESC>Periodo incorrecto. El indicador de declaración bimensual únicamente admite los periodos: 02, 05, 08 o 11.</DESC>
+			<campoError>T1_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31302" TIPO="E">
+		<IDIOMA>
+			<DESC>No se ha indicado ninguna rectificación.</DESC>
+			<campoError>T3_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31303" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Base Imponible declarada anteriormente</DESC>
+			<campoError>T3_ANTERIOR_BASE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31601" TIPO="E">
+		<IDIOMA>
+			<DESC>Rectificación de Código de país NO ALFABETICO.</DESC>
+			<campoError>T3_RECTI_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31603" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Rectificación de Código de País.</DESC>
+			<campoError>T3_RECTI_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702A" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Alemania deben ser 9 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702AA" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Irlanda del Norte deben ser 5, 9 ó 12 caracteres alfanuméricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702B" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Austria deben ser 9 caracteres alfanuméricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702C" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Bélgica deben ser 10 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702D" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Dinamarca deben ser 8 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702E" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Finlandia deben ser 8 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702F" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Francia deben ser 11 caracteres alfanuméricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702G" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Grecia deben ser 9 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702H" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Reino Unido deben ser 5, 9 ó 12 caracteres alfanuméricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702I" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Países Bajos deben ser 12 caracteres alfanuméricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702II" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Croacia deben ser 11 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702J" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Italia deben ser 11 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702K" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Irlanda deben ser 8 ó 9 caracteres alfanuméricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702L" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Luxemburgo deben ser 8 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702M" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Portugal deben ser 9 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702N" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Suecia deben ser 12 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702O" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Chipre deben ser 9 caracteres alfanuméricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702P" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Eslovenia deben ser 8 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702Q" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Estonia deben ser 9 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702R" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Hungría deben ser 8 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702S" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Letonia deben ser 11 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702T" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Lituania deben ser 9 ó 12 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702U" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Malta deben ser 8 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702V" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Polonia deben ser 10 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702W" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de República Checa deben ser 8, 9 ó 10 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702X" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de República Eslovaca deben ser  10 caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702Y" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Bulgaria deben ser 9 ó 10  caracteres numéricos</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31702Z" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF de Operador Intracomunitario de Rumanía deben ser 2 a 10  caracteres numéricos sin ceros por la izquierda.</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31703" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en Rectificación del NIF de Operador Intracomunitario</DESC>
+			<campoError>T3_RECTI_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31803" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Rectificación de Apellidos y nombre, razón social o denominación del Operador Intracomunitario</DESC>
+			<campoError>T3_RECTI_NOMBRE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31901" TIPO="E">
+		<IDIOMA>
+			<DESC>Rectificación de Clave Operación INCORRECTO.</DESC>
+			<campoError>T3_RECTI_CLAVE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="31903" TIPO="E">
+		<IDIOMA>
+			<DESC>Rectificación de Clave Operación sin contenido.</DESC>
+			<campoError>T3_RECTI_CLAVE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="32006" TIPO="E">
+		<IDIOMA>
+			<DESC>Para un mismo ejercicio se han indicado simultáneamente rectificaciones correspondientes al periodo 0A.</DESC>
+			<campoError>T3_ESTADO_REG</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="40001" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido excesivo en Número total de operadores intracomunitarios.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="40002" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido excesivo en Importe de las operaciones intracomunitarias.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="40003" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido excesivo en Número total de operadores intracomunitarios con rectificaciones.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="40004" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido excesivo en Importe de las rectificaciones.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="40005" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en número total de operadores intracomunitarios</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="40006" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en Importe de las operaciones intracomunitarias</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="40007" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en número total de operadores intracomunitarios con rectificaciones</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="40008" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en importe total de las retenciones e ingresos a cuenta</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50205" TIPO="W">
+		<IDIOMA>
+			<DESC>Se han realizado presentaciones previas para este modelo, ejercicio y periodo, por una vía distinta al formulario. No podrá realizar la presentación de la declaración por esta vía.</DESC>
+			<Error_Warning>W</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50206" TIPO="E">
+		<IDIOMA>
+			<DESC>Se han realizado presentaciones previas para este modelo, ejercicio y periodo, por una vía distinta al formulario. No podrá realizar la presentación de la declaración por esta vía.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50214" TIPO="E">
+		<IDIOMA>
+			<DESC>Las rectificaciones de operaciones con claves R, D o C no pueden ser anteriores a 2020</DESC>
+			<campoError>T3_RECTI_EJERCICIO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50215" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo código país del sujeto pasivo sustituto</DESC>
+			<campoError>T2_PAIS_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50216" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Código país</DESC>
+			<campoError>T3_PAIS_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50217" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Código país</DESC>
+			<campoError>T3_RECTI_PAIS_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50218" TIPO="E">
+		<IDIOMA>
+			<DESC>NIF del sujeto pasivo sustituto de %1 deben ser %2</DESC>
+			<campoError>T2_NIF_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50221" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo NIF del sujeto pasivo sustituto</DESC>
+			<campoError>T2_NIF_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50222" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Apellidos y nombre, razón social o denominación del sujeto pasivo sustituto</DESC>
+			<campoError>T2_NOMBRE_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50223" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo NIF del sujeto pasivo sustituto</DESC>
+			<campoError>T3_NIF_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50224" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Apellidos y nombre, razón social o denominación del sujeto pasivo sustituto</DESC>
+			<campoError>T3_NOMBRE_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50225" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo NIF del sujeto pasivo sustituto</DESC>
+			<campoError>T3_RECTI_NIF_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50226" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta contenido en el campo Apellidos y nombre, razón social o denominación del sujeto pasivo sustituto</DESC>
+			<campoError>T3_RECTI_NOMBRE_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50229" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en Código país. Debe coincidir el país consignado en el Código país del operador intracomunitario y el del sujeto pasivo sustituto</DESC>
+			<campoError>T2_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50230" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en Código país. Debe coincidir el país consignado en el Código país del operador intracomunitario y el del sujeto pasivo sustituto</DESC>
+			<campoError>T3_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50231" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en Código país. Debe coincidir el país consignado en el Código país del operador intracomunitario y el del sujeto pasivo sustituto</DESC>
+			<campoError>T3_RECTI_PAIS</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50232" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en periodo.</DESC>
+			<campoError>T1_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50233" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en periodo.</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50234" TIPO="E">
+		<IDIOMA>
+			<DESC>Periodo no permitido para rectificaciones de operaciones con claves R, D o C</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50237" TIPO="E">
+		<IDIOMA>
+			<DESC>Periodo no permitido para rectificaciones de operaciones con el ejercicio indicado</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50238" TIPO="E">
+		<IDIOMA>
+			<DESC>Presentación abortada por el usuario</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50240" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en código de país del sujeto pasivo sustituto</DESC>
+			<campoError>T2_PAIS_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50241" TIPO="E">
+		<IDIOMA>
+			<DESC>El NIF del sujeto pasivo sustituto no puede coincidir con el del operador intracomunitario.</DESC>
+			<campoError>T2_NIF_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50242" TIPO="E">
+		<IDIOMA>
+			<DESC>El NIF del sujeto pasivo sustituto no puede coincidir con el del operador intracomunitario (rectificación - datos de la operación intracomunitaria).</DESC>
+			<campoError>T3_NIF_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50243" TIPO="E">
+		<IDIOMA>
+			<DESC>El NIF del sujeto pasivo sustituto no puede coincidir con el del operador intracomunitario (rectificación - datos de la rectificación).</DESC>
+			<campoError>T3_RECTI_NIF_SUSTITUTO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50250" TIPO="E">
+		<IDIOMA>
+			<DESC>Período no válido si Código País es igual a GB</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="50251" TIPO="E">
+		<IDIOMA>
+			<DESC>Período no válido si Código País es igual a GB</DESC>
+			<campoError>T1_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="6011" TIPO="W">
+		<IDIOMA>
+			<DESC>El registro de la operación original se ha copiado en la parte correspondiente a los Datos de la  Rectificación.Recuerde que deberá modificar alguno de estos datos para completar la rectificación de forma correcta.</DESC>
+			<Error_Warning>W</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="6018" TIPO="E">
+		<IDIOMA>
+			<DESC>El periodo indicado no es correcto para las rectificaciones presentadas. Periodos válidos: %1</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="6022" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido excesivo en Número total de operadores intracomunitarios</DESC>
+			<campoError>T1_TOTAL_OPERADORES_INTRA</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="6023" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido excesivo en Importe de las operaciones intracomunitarias</DESC>
+			<campoError>T1_TOTAL_OPERACIONES</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="6024" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido excesivo en Número total de operadores intracomunitarios con rectificaciones</DESC>
+			<campoError>T1_NUM_TOTAL_RECTIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="6025" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido excesivo en Importe de las rectificaciones</DESC>
+			<campoError>T1_TOTAL_RECTIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="6026" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido excesivo en Base imponible</DESC>
+			<campoError>T2_BASE_IMPONIBLE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="6118" TIPO="E">
+		<IDIOMA>
+			<DESC>Hay registros de rectificaciones que impiden la presentación de la declaración en ningún periodos.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="6028" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido excesivo en Base imponible rectificada</DESC>
+			<campoError>T3_RECTI_BASE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="6029" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido excesivo en Base imponible declarada anteriormente</DESC>
+			<campoError>T3_ANTERIOR_BASE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="6040" TIPO="E">
+		<IDIOMA>
+			<DESC>No se ha iniciado el plazo de presentación del periodo seleccionado.</DESC>
+			<campoError>T1_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="80127" TIPO="E">
+		<IDIOMA>
+			<DESC>Valor en el campo 'desde' no puede ser superior al valor 'hasta'.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="90012" TIPO="E">
+		<IDIOMA>
+			<DESC>No coincide NIF Declarante registro tipo 2 con NIF Declarante registro tipo 1.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="90025" TIPO="E">
+		<IDIOMA>
+			<DESC>Ejercicio de tipo 2 incorrecto.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="90702II" TIPO="E">
+		<IDIOMA>
+			<DESC>No se pueden realizar rectificaciones de operaciones, devengadas con anterioridad al 1 de julio de 2013, si código país es Croacia.</DESC>
+			<campoError>T3_ESTADO_REG</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="91201" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en Código Postal.</DESC>
+			<campoError>T1_DOM_CODPOSTAL</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="91301" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en Fecha.</DESC>
+			<campoError>T1_PRESENTACION_FECHA</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="91401" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en Firmante.</DESC>
+			<campoError>T1_PRESENTACION_FIRMANTE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="95000" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en 'NIF del declarante'.</DESC>
+			<campoError>T1_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="95001" TIPO="E">
+		<IDIOMA>
+			<DESC>Contenido incorrecto en 'Apellidos y nombre o razón social del declarante'.</DESC>
+			<campoError>T1_NOMBRE</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="95126" TIPO="H">
+		<IDIOMA>
+			<DESC>NIF no coincidente con el de la identificación por PIN.</DESC>
+			<Error_Warning>H</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="95127" TIPO="H">
+		<IDIOMA>
+			<DESC>NOMBRE no coincidente con el de la identificación por PIN.</DESC>
+			<Error_Warning>H</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="99997" TIPO="B">
+		<IDIOMA>
+			<DESC>La comprobación se realizó correctamente. No existen errores.</DESC>
+			<Error_Warning>B</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="AUTORIZADOCON" TIPO="E">
+		<IDIOMA>
+			<DESC>Usted no cumple las condiciones para realizar este trámite en representación del obligado tributario.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="E30655" TIPO="E">
+		<IDIOMA>
+			<DESC>No se pueden realizar rectificaciones de operaciones, devengadas con posterioridad 2021, si código país es GB</DESC>
+			<campoError>T3_RECTI_EJERCICIO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="EII01" TIPO="E">
+		<IDIOMA>
+			<DESC>El declarante seleccionado tiene más de 49999 registros.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="EII02" TIPO="E">
+		<IDIOMA>
+			<DESC>Desbordamiento en el cálculo de los campos  Total Operaciones y/o Total Rectificaciones. No se puede Imprimir.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="EII03" TIPO="E">
+		<IDIOMA>
+			<DESC>Desbordamiento en el cálculo de los campos  Total Operaciones y/o Total Rectificaciones. No se puede generar el fichero de internet.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="EJANTERIORES" TIPO="E">
+		<IDIOMA>
+			<DESC>Debe cumplimentar el NIF del declarante.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="EMALEMP" TIPO="E">
+		<IDIOMA>
+			<DESC>Error fichero vacio.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ENORECT" TIPO="E">
+		<IDIOMA>
+			<DESC>Falta registro de rectificación.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="EPP01" TIPO="E">
+		<IDIOMA>
+			<DESC>Será obligatoria la presentación con certificado electrónico reconocido cuando alguno de los declarantes seleccionados sea una persona jurídica o entidad en régimen de atribución de rentas, o siendo persona física esté adscrito a la DCGC o UGGE (DRI) de la Agencia Estatal de Administración Tributaria.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="EPP02" TIPO="A">
+		<IDIOMA>
+			<DESC>La presentación sólo podrá realizarse por alguna de las siguientes vías: a) Las declaraciones que contengan hasta 5.000.000 registros, deberán presentarse por vía telemática a través de Internet, b) Las declaraciones que contengan más de 5.000.000 registros, cualquiera que sea la persona o entidad obligada a su presentación, deberán presentarse en DVD.</DESC>
+			<Error_Warning>A</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="EREG2NO" TIPO="E">
+		<IDIOMA>
+			<DESC>Se rechaza registro de rectificación por falta de datos de la operación intracomunitaria.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="EREG3NO" TIPO="E">
+		<IDIOMA>
+			<DESC>Se rechaza registro de rectificación por falta de datos de la rectificación.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR01" TIPO="E">
+		<IDIOMA>
+			<DESC>Hay registros de rectificaciones que impiden la presentación de la declaración en los periodos que no están activados. Periodos válidos: %1</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR02" TIPO="E">
+		<IDIOMA>
+			<DESC>Hay registros de operaciones y/o rectificaciones que impiden la presentación de la declaración para las opciones que no están activadas.</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR03" TIPO="E">
+		<IDIOMA>
+			<DESC>Hay registros de operaciones y/o rectificaciones que impiden la presentación de la declaración para las opciones que no están activadas.</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR05" TIPO="E">
+		<IDIOMA>
+			<DESC>Hay registros de operaciones y/o rectificaciones que impiden la presentación de la declaración para las opciones que no están activadas.</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR06" TIPO="E">
+		<IDIOMA>
+			<DESC>La opción de declaración bimensual impide su presentación en los periodos que no están activados. Periodos válidos: %1</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR06B" TIPO="E">
+		<IDIOMA>
+			<DESC>La opción de declaración bimensual así como los registros de rectificaciones impiden la presentación de la declaración en los periodos que no están activados. Periodos válidos: %1</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR0A" TIPO="E">
+		<IDIOMA>
+			<DESC>Período no permitido para rectificaciones de operaciones con el ejercicio indicado</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR0AB" TIPO="E">
+		<IDIOMA>
+			<DESC>No es posible la presentación de la declaración por incluir rectificaciones de operaciones correspondientes al periodo 0A del ejercicio actual y haber optado por la declaración bimensual</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR10B" TIPO="E">
+		<IDIOMA>
+			<DESC>No es posible la presentación de la declaración por incluir rectificaciones de operaciones correspondientes al periodo 10 del ejercicio actual y haber optado por la declaración bimensual</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR11B" TIPO="E">
+		<IDIOMA>
+			<DESC>No es posible la presentación de la declaración por incluir rectificaciones de operaciones correspondientes al periodo 11 del ejercicio actual y haber optado por la declaración bimensual</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR12" TIPO="E">
+		<IDIOMA>
+			<DESC>No es posible la presentación de la declaración por incluir rectificaciones de operaciones correspondientes al periodo 12 del ejercicio actual</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR12B" TIPO="E">
+		<IDIOMA>
+			<DESC>No es posible la presentación de la declaración por incluir rectificaciones de operaciones correspondientes al periodo 12 del ejercicio actual y haber optado por la declaración bimensual</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR4T" TIPO="E">
+		<IDIOMA>
+			<DESC>No es posible la presentación de la declaración por incluir rectificaciones de operaciones correspondientes al periodo 4T del ejercicio actual</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ERR4TB" TIPO="E">
+		<IDIOMA>
+			<DESC>No es posible la presentación de la declaración por incluir rectificaciones de operaciones correspondientes al periodo 4T del ejercicio actual y haber optado por la declaración bimensual</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ESS03" TIPO="E">
+		<IDIOMA>
+			<DESC>No se puede realizar la obtención en Soporte porque no ha cumplimentado los datos del Presentador.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ETI2DUP" TIPO="E">
+		<IDIOMA>
+			<DESC>No se admiten registros de operaciones intracomunitarias por duplicado. Puede corregirlos en 2. Operaciones intracomunitarias.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="ETI3DUP" TIPO="E">
+		<IDIOMA>
+			<DESC>No se admiten registros de rectificaciones por duplicado. Puede corregirlos en 3. Rectificaciones.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="IDT50227" TIPO="E">
+		<IDIOMA>
+			<DESC>Declarante no identificado</DESC>
+			<campoError>T1_NIF</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="MSG.AGREGAR_O_BORRAR1" TIPO="I">
+		<IDIOMA>
+			<DESC>A - Borrar todos los registros de operaciones intracomunitarias y rectificaciones e importar</DESC>
+			<Error_Warning>I</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="MSG.AGREGAR_O_BORRAR2" TIPO="I">
+		<IDIOMA>
+			<DESC>B - Agregar registros de operaciones intracomunitarias y rectificaciones a la declaración actual</DESC>
+			<Error_Warning>I</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="OVERFLOW_MOTOR" TIPO="E">
+		<IDIOMA>
+			<DESC>La partida supera el máximo permitido.</DESC>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="T3_PERR04" TIPO="E">
+		<IDIOMA>
+			<DESC>Hay registros de operaciones y/o rectificaciones que impiden la presentación de la declaración para las opciones que no están activadas.</DESC>
+			<campoError>T3_PERIODO</campoError>
+			<Error_Warning>E</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+	<CODIGO COD="TITULO" TIPO="I">
+		<IDIOMA>
+			<DESC>Modelo creado con el asistente</DESC>
+			<Error_Warning>I</Error_Warning>
+		</IDIOMA>
+	</CODIGO>
+</ERROR>

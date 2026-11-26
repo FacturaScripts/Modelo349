@@ -15,6 +15,15 @@ en el mismo trabajo que cambia el código.
 - [`04-api.md`](04-api.md): endpoint `GET /api/3/modelo349`, parámetros, respuesta y errores.
 - [`05-evolucion.md`](05-evolucion.md): etapas del plugin según el historial git.
 
+## Normativa
+
+- [`Normativa/`](Normativa/): documentación **oficial** del modelo 349 (AEAT y BOE), descargada con la skill
+  `download-modelo349` (`.agents/skills/`). Contiene `actual/` (diseño de registro, instrucciones, especificaciones del
+  portal de desarrolladores, normativa del BOE en `actual/normativa/`), `paginas/` (texto de la ayuda técnica, plazos y
+  notas de la Sede), `historico/` (versiones sustituidas), `manifest.json` y [`CHANGELOG.md`](Normativa/CHANGELOG.md) (qué
+  se bajó, versiones vigentes, alertas y lo que queda por descargar a mano). Contrasta con ella cualquier decisión sobre
+  claves, campos o plazos; para refrescarla, ejecuta la skill.
+
 ## Decisiones
 
 - [`0001-clave-por-operacion-de-la-factura.md`](Decisiones/0001-clave-por-operacion-de-la-factura.md): por qué la clave sale del campo `operacion`.
