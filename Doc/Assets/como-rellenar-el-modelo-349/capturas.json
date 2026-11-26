@@ -1,0 +1,249 @@
+{
+  "base_url": "https://fs.localhost/",
+  "login": true,
+  "output_dir": "Doc/Assets/como-rellenar-el-modelo-349",
+  "redact": {
+    "keep": [],
+    "replace": {
+      "FS": "Mi Empresa",
+      "Laura Martín Ortega": "Empresa Ejemplo SL",
+      "CERTIFICADO ENTIDAD PRUEBAS": "Empresa Ejemplo SL",
+      "Café Bonn GmbH": "Cliente Ejemplo GmbH",
+      "Maschinenbau Weber GmbH": "Proveedor Ejemplo GmbH",
+      "DE811569869": "DE123456789",
+      "DE129273398": "DE987654321",
+      "Studio Lyon SARL": "Cliente Ejemplo SARL",
+      "FR40303265045": "FR12345678901",
+      "Cloud Services Ireland Ltd": "Proveedor Ejemplo Ltd",
+      "IE6388047V": "IE1234567A"
+    }
+  },
+  "captures": [
+    {
+      "name": "01-menu-modelo-349",
+      "url": "Dashboard",
+      "steps": [
+        {
+          "click": "text=Informes"
+        },
+        {
+          "eval": "const a=[...document.querySelectorAll('.dropdown-menu.show a')].find(x=>x.textContent.trim()=='Modelos fiscales'); a.parentElement.querySelector('.dropdown-menu').classList.add('show')"
+        }
+      ],
+      "highlight": [
+        {
+          "target": "text=Informes",
+          "label": "1"
+        },
+        {
+          "target": ".dropdown-menu.show >> text=Modelos fiscales",
+          "label": "2"
+        },
+        {
+          "target": ".dropdown-menu.show >> text=Modelo 349",
+          "label": "3"
+        }
+      ],
+      "clip": [
+        "nav.navbar",
+        ".dropdown-menu.show .dropdown-menu.show"
+      ]
+    },
+    {
+      "name": "02-filtros-del-modelo",
+      "url": "Modelo349?v=1",
+      "highlight": [
+        {
+          "target": ".col-sm .mb-2",
+          "nth": 0,
+          "label": "1",
+          "padding": 4
+        },
+        {
+          "target": ".col-sm .mb-2",
+          "nth": 1,
+          "label": "2",
+          "padding": 4
+        },
+        {
+          "target": ".col-sm .mb-2",
+          "nth": 2,
+          "label": "3",
+          "padding": 4
+        },
+        {
+          "target": ".col-sm .mb-2",
+          "nth": 3,
+          "label": "4",
+          "padding": 4
+        },
+        {
+          "target": ".col-sm .mb-2",
+          "nth": 4,
+          "label": "5",
+          "padding": 4
+        },
+        {
+          "target": "text=Previsualizar",
+          "label": "6"
+        },
+        {
+          "target": "text=TXT para hacienda",
+          "label": "7"
+        }
+      ],
+      "clip": [
+        "nav.navbar",
+        "text=TXT para hacienda"
+      ],
+      "margin": 24
+    },
+    {
+      "name": "03-declaracion-complementaria",
+      "url": "Modelo349?v=2",
+      "steps": [
+        {
+          "select": "#declarationtype",
+          "value": "C"
+        },
+        {
+          "wait": 300
+        }
+      ],
+      "highlight": [
+        {
+          "target": "#declarationtype",
+          "label": "1",
+          "padding": 6
+        },
+        {
+          "target": "input[name=\"justificante\"]",
+          "label": "2",
+          "padding": 6
+        },
+        {
+          "target": "input[name=\"justificanteanterior\"]",
+          "label": "3",
+          "padding": 6
+        }
+      ],
+      "clip": [
+        "h1",
+        "text=TXT para hacienda"
+      ],
+      "margin": 16
+    },
+    {
+      "name": "04-entregas-intracomunitarias",
+      "url": "Modelo349?v=04",
+      "steps": [
+        {
+          "wait_for": "form[name=modelo349]"
+        },
+        {
+          "wait": 500
+        },
+        {
+          "eval": "const f=document.querySelector('form[name=modelo349]'); f.codejercicio.value='MF25'; f.periodo.value='1T'; f.submit()"
+        },
+        {
+          "wait_for": "#sales-tab .badge"
+        }
+      ],
+      "highlight": [
+        {
+          "target": "p.small",
+          "label": "1",
+          "padding": 6
+        },
+        {
+          "target": "#sales-tab",
+          "label": "2"
+        },
+        {
+          "target": "tbody tr",
+          "nth": 0,
+          "label": "3",
+          "padding": 4
+        },
+        {
+          "target": "tfoot",
+          "label": "4"
+        }
+      ],
+      "clip": [
+        "nav.navbar",
+        "tfoot"
+      ],
+      "margin": 24
+    },
+    {
+      "name": "05-adquisiciones-intracomunitarias",
+      "steps": [
+        {
+          "wait_for": "form[name=modelo349]"
+        },
+        {
+          "wait": 500
+        },
+        {
+          "eval": "const f=document.querySelector('form[name=modelo349]'); f.codejercicio.value='MF25'; f.periodo.value='1T'; f.submit()"
+        },
+        {
+          "wait_for": "#sales-tab .badge"
+        },
+        {
+          "click": "#purchases-tab"
+        },
+        {
+          "wait": 500
+        }
+      ],
+      "highlight": [
+        {
+          "target": "#purchases-tab",
+          "label": "1"
+        },
+        {
+          "target": "#purchases tbody tr",
+          "nth": 0,
+          "label": "2",
+          "padding": 4
+        },
+        {
+          "target": "#purchases tfoot",
+          "label": "3"
+        }
+      ],
+      "clip": [
+        "#purchases-tab",
+        "#purchases tfoot"
+      ],
+      "margin": 24,
+      "url": "Modelo349?v=05"
+    },
+    {
+      "name": "06-periodo-sin-operaciones",
+      "url": "Modelo349?v=06",
+      "steps": [
+        {
+          "wait_for": "form[name=modelo349]"
+        },
+        {
+          "wait": 500
+        },
+        {
+          "eval": "const f=document.querySelector('form[name=modelo349]'); f.codejercicio.value='GE25'; f.periodo.value='1T'; f.submit()"
+        },
+        {
+          "wait_for": ".alert-warning"
+        }
+      ],
+      "clip": [
+        "nav.navbar",
+        ".alert-warning"
+      ],
+      "margin": 24
+    }
+  ]
+}

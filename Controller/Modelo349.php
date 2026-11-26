@@ -38,10 +38,10 @@ use FacturaScripts\Dinamic\Model\Serie;
  */
 class Modelo349 extends Controller
 {
-    /** @var string */
+    /** @var string Código del ejercicio seleccionado; determina la empresa y el año declarados. */
     public $codejercicio;
 
-    /** @var string */
+    /** @var string Serie de facturas a filtrar; vacío para todas. */
     public $codserie = '';
 
     /**
@@ -51,31 +51,31 @@ class Modelo349 extends Controller
      */
     public $company;
 
-    /** @var string */
+    /** @var string Tipo de declaración: '' (normal), 'C' (complementaria) o 'S' (sustitutiva). */
     public $declarationType = '';
 
-    /** @var string */
+    /** @var string Número de justificante de 13 dígitos (solo números); vacío para que se genere uno. */
     public $justificante = '';
 
-    /** @var string */
+    /** @var string Número de justificante de la declaración anterior (solo números). */
     public $justificanteAnterior = '';
 
-    /** @var string */
+    /** @var string Periodo seleccionado en formato de pantalla: '1T'-'4T' o '01'-'12'. */
     public $periodo;
 
-    /** @var array */
+    /** @var array Compras intracomunitarias (claves A e I): cifnif, nombre, codpais, base y clave. */
     public $purchasesData = [];
 
-    /** @var array */
+    /** @var array Totales de las compras; 'total' es la suma de las bases. */
     public $purchasesTotals = ['total' => 0.0];
 
-    /** @var array */
+    /** @var array Ventas intracomunitarias (claves E y S): cifnif, nombre, codpais, base y clave. */
     public $salesData = [];
 
-    /** @var array */
+    /** @var array Totales de las ventas; 'total' es la suma de las bases. */
     public $salesTotals = ['total' => 0.0];
 
-    /** @var bool */
+    /** @var bool Indica si ya se han calculado los datos (la vista muestra los resultados). */
     public $searched = false;
 
     /**
@@ -85,17 +85,34 @@ class Modelo349 extends Controller
      */
     public $year = 0;
 
+    /**
+     * Empresas disponibles, para el selector de la vista.
+     *
+     * @return array
+     */
     public function getCompanies(): array
     {
         return Empresas::all();
     }
 
+    /**
+     * Nombre del país para mostrarlo en la vista; si no existe, devuelve el propio código.
+     *
+     * @param string $codpais código del país (alfa-3).
+     *
+     * @return string
+     */
     public function getCountryName(string $codpais): string
     {
         $pais = Paises::get($codpais);
         return $pais->nombre ?? $codpais;
     }
 
+    /**
+     * Datos de la página: menú Informes, submenú de modelos fiscales.
+     *
+     * @return array
+     */
     public function getPageData(): array
     {
         $data = parent::getPageData();
@@ -106,6 +123,11 @@ class Modelo349 extends Controller
         return $data;
     }
 
+    /**
+     * Periodos del selector (trimestres 1T-4T y meses 01-12) con su texto traducido.
+     *
+     * @return array periodo => texto.
+     */
     public function getPeriodOptions(): array
     {
         return [
@@ -128,6 +150,11 @@ class Modelo349 extends Controller
         ];
     }
 
+    /**
+     * Series de facturas para el selector, con la opción «todas» (clave vacía) al principio.
+     *
+     * @return array codserie => texto.
+     */
     public function getSeries(): array
     {
         $serie = new Serie();
@@ -202,6 +229,11 @@ class Modelo349 extends Controller
             ->setContent($content);
     }
 
+    /**
+     * Trimestre en curso según la fecha de hoy.
+     *
+     * @return string '1T'-'4T'.
+     */
     protected function getDefaultPeriod(): string
     {
         $month = (int)date('m');

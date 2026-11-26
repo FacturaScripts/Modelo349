@@ -1,0 +1,116 @@
+{
+  "base_url": "https://fs.localhost/",
+  "login": true,
+  "output_dir": "Doc/Assets/claves-de-operacion-del-modelo-349",
+  "redact": {
+    "keep": [],
+    "replace": {
+      "FS": "Mi Empresa",
+      "Laura Martín Ortega": "Empresa Ejemplo SL",
+      "CERTIFICADO ENTIDAD PRUEBAS": "Empresa Ejemplo SL",
+      "Café Bonn GmbH": "Cliente Ejemplo GmbH",
+      "Maschinenbau Weber GmbH": "Proveedor Ejemplo GmbH",
+      "DE811569869": "DE123456789",
+      "DE129273398": "DE987654321",
+      "Studio Lyon SARL": "Cliente Ejemplo SARL",
+      "FR40303265045": "FR12345678901",
+      "Cloud Services Ireland Ltd": "Proveedor Ejemplo Ltd",
+      "IE6388047V": "IE1234567A"
+    }
+  },
+  "captures": [
+    {
+      "name": "01-operacion-de-la-factura",
+      "url": "EditFacturaCliente?code=552",
+      "steps": [
+        {
+          "click": "text=Detalle"
+        },
+        {
+          "wait": 800
+        },
+        {
+          "eval": "document.querySelectorAll('select').forEach(s=>{if([...s.options].some(o=>o.textContent.trim()=='Intracomunitaria')){s.classList.add('mkop');s.closest('div').classList.add('mkdiv')}})"
+        }
+      ],
+      "margin": 24,
+      "highlight": [
+        {
+          "target": ".mkop",
+          "label": "1",
+          "padding": 6
+        }
+      ],
+      "clip": [
+        ".modal-header",
+        ".mkop"
+      ]
+    },
+    {
+      "name": "02-clave-s-en-ventas",
+      "url": "Modelo349?v=02",
+      "steps": [
+        {
+          "wait_for": "form[name=modelo349]"
+        },
+        {
+          "wait": 500
+        },
+        {
+          "eval": "const f=document.querySelector('form[name=modelo349]'); f.codejercicio.value='MF25'; f.periodo.value='2T'; f.submit()"
+        },
+        {
+          "wait_for": "#sales-tab .badge"
+        }
+      ],
+      "highlight": [
+        {
+          "target": "#sales .badge.bg-primary",
+          "label": "1",
+          "padding": 4
+        }
+      ],
+      "clip": [
+        "#sales-tab",
+        "#sales tfoot"
+      ],
+      "margin": 24
+    },
+    {
+      "name": "03-clave-i-en-compras",
+      "steps": [
+        {
+          "wait_for": "form[name=modelo349]"
+        },
+        {
+          "wait": 500
+        },
+        {
+          "eval": "const f=document.querySelector('form[name=modelo349]'); f.codejercicio.value='MF25'; f.periodo.value='2T'; f.submit()"
+        },
+        {
+          "wait_for": "#sales-tab .badge"
+        },
+        {
+          "click": "#purchases-tab"
+        },
+        {
+          "wait": 500
+        }
+      ],
+      "highlight": [
+        {
+          "target": "#purchases .badge.bg-primary",
+          "label": "1",
+          "padding": 4
+        }
+      ],
+      "clip": [
+        "#purchases-tab",
+        "#purchases tfoot"
+      ],
+      "margin": 24,
+      "url": "Modelo349?v=03"
+    }
+  ]
+}

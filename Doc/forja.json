@@ -1,0 +1,55 @@
+{
+    "User": {
+        "como-rellenar-el-modelo-349.md": {
+            "title": "Cómo rellenar el modelo 349",
+            "title_short": "Modelo 349",
+            "permalink": "como-rellenar-el-modelo-349",
+            "ordernum": 10,
+            "imageurl": "Doc/Assets/como-rellenar-el-modelo-349/04-entregas-intracomunitarias.png",
+            "icon": "fa-solid fa-book",
+            "color": "primary",
+            "keywords": "modelo 349, operaciones intracomunitarias, declaración recapitulativa, ROI, entregas intracomunitarias, adquisiciones intracomunitarias, fichero 349, NIF-IVA",
+            "controllers": "Modelo349",
+            "visibility": true,
+            "idpublication": 3188
+        },
+        "claves-de-operacion-del-modelo-349.md": {
+            "title": "Claves de operación del modelo 349",
+            "title_short": "Claves del 349",
+            "permalink": "claves-de-operacion-del-modelo-349",
+            "parent": "como-rellenar-el-modelo-349.md",
+            "ordernum": 20,
+            "imageurl": "Doc/Assets/claves-de-operacion-del-modelo-349/01-operacion-de-la-factura.png",
+            "icon": "fa-solid fa-key",
+            "color": "primary",
+            "keywords": "modelo 349, claves de operación, clave E, clave A, clave S, clave I, operación intracomunitaria, servicios intracomunitarios",
+            "controllers": "Modelo349",
+            "visibility": true
+        },
+        "solucion-de-problemas-del-modelo-349.md": {
+            "title": "Solución de problemas del modelo 349",
+            "title_short": "Problemas del 349",
+            "permalink": "solucion-de-problemas-del-modelo-349",
+            "parent": "como-rellenar-el-modelo-349.md",
+            "ordernum": 30,
+            "icon": "fa-solid fa-life-ring",
+            "color": "warning",
+            "keywords": "modelo 349, no aparece factura, sin datos, avisos, país UE, NIF-IVA, teléfono empresa, administrador",
+            "controllers": "Modelo349",
+            "visibility": true
+        }
+    },
+    "Dev": {
+        "api-modelo-349.md": {
+            "title": "API REST del modelo 349",
+            "title_short": "API modelo 349",
+            "permalink": "api-modelo-349",
+            "ordernum": 10,
+            "icon": "fa-solid fa-plug",
+            "color": "info",
+            "keywords": "api, rest, modelo 349, operaciones intracomunitarias, token, curl, mcp",
+            "controllers": "ApiModelo349",
+            "visibility": true
+        }
+    }
+}
