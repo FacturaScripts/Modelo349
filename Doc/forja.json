@@ -11,7 +11,33 @@
             "keywords": "modelo 349, operaciones intracomunitarias, declaración recapitulativa, ROI, entregas intracomunitarias, adquisiciones intracomunitarias, fichero 349, NIF-IVA",
             "controllers": "Modelo349",
             "visibility": true,
-            "idpublication": 3188
+            "idpublication": 3188,
+            "assets": {
+                "Assets/como-rellenar-el-modelo-349/01-menu-modelo-349.png": {
+                    "url": "/MyFiles/2026/11/8545_forja_nnt2ckr9rf_01_menu_modelo_349.png?myft=67821ceef2b59d0d7280ae4a531fff678337200dd3cbced28cd1bf90510803ce",
+                    "sha256": "d16484444f8fd2a5d749eb6ec7d5979c80d87904bef26a8089ca9b07481eca80"
+                },
+                "Assets/como-rellenar-el-modelo-349/02-filtros-del-modelo.png": {
+                    "url": "/MyFiles/2026/11/8546_forja_b5r47is9re_02_filtros_del_modelo.png?myft=e6847c8283f4987dd3eec4f10b8c065233daec7a0192d595dd2900688a10f4fe",
+                    "sha256": "797d7892e29959b58bf59d474f27a90d18a732272c4a8d114a9c4ce97c0aeebe"
+                },
+                "Assets/como-rellenar-el-modelo-349/03-declaracion-complementaria.png": {
+                    "url": "/MyFiles/2026/11/8547_forja_sxn0mhjbd2_03_declaracion_complementaria.png?myft=55279ea34a633bfd5132390337e29f4838efd9d8fea95dbcb0bba03140e0b289",
+                    "sha256": "decfe89eb27ba9cfb3307095356af5b75e45db087c6c78a1854b725368c85dec"
+                },
+                "Assets/como-rellenar-el-modelo-349/04-entregas-intracomunitarias.png": {
+                    "url": "/MyFiles/2026/11/8548_forja_4dqinkdrms_04_entregas_intracomunitarias.png?myft=507dd8ffa4c4882fb48bf425bebb744fe331ddb0cd3a8d6cc28e7fe4500ee077",
+                    "sha256": "cb85a485ba16616208fd7419c8d59163ceb3a109d4d3fa284e98bb6c40a2f784"
+                },
+                "Assets/como-rellenar-el-modelo-349/05-adquisiciones-intracomunitarias.png": {
+                    "url": "/MyFiles/2026/11/8549_forja_gcgq1ggwts_05_adquisiciones_intracomunitarias.png?myft=a6ee9365e9a03f4be613877eadd601b970ad140348aad34f237a8fbb71db7f11",
+                    "sha256": "adf47cba51f0ca4e7193b7adccbb2ad8021f5743a775de88a392de60d2136b7c"
+                },
+                "Assets/como-rellenar-el-modelo-349/06-periodo-sin-operaciones.png": {
+                    "url": "/MyFiles/2026/11/8550_forja_3fo0rtotxu_06_periodo_sin_operaciones.png?myft=d83ce3df69c65ad50b716c238ecb8b6ebf6d3a54bff327cd3bacef1ba8492c9b",
+                    "sha256": "edfb72fcebad8c291362b97ec9ce73526c7244c74139009adedd5927908a314c"
+                }
+            }
         },
         "claves-de-operacion-del-modelo-349.md": {
             "title": "Claves de operación del modelo 349",
@@ -24,7 +50,22 @@
             "color": "primary",
             "keywords": "modelo 349, claves de operación, clave E, clave A, clave S, clave I, operación intracomunitaria, servicios intracomunitarios",
             "controllers": "Modelo349",
-            "visibility": true
+            "visibility": true,
+            "idpublication": 5119,
+            "assets": {
+                "Assets/claves-de-operacion-del-modelo-349/01-operacion-de-la-factura.png": {
+                    "url": "/MyFiles/2026/11/8551_forja_dadj2q9yum_01_operacion_de_la_factura.png?myft=d819092f10c0fe9e308584de43682440211ada7c65ff84c9e1a264728b5d4070",
+                    "sha256": "6036236ccd4a24b70e160deb33805dc55524f54dc8c8c9139793d525d36f4857"
+                },
+                "Assets/claves-de-operacion-del-modelo-349/02-clave-s-en-ventas.png": {
+                    "url": "/MyFiles/2026/11/8552_forja_gfmedcayvm_02_clave_s_en_ventas.png?myft=53a999929a3349b7ab60965f54f3237408e9733e41a7324aeb8896927e40f2fa",
+                    "sha256": "cf31a588dda1ee92b19119cdc340bd9c99ccde17cc064b9fe384a99d1e225e4b"
+                },
+                "Assets/claves-de-operacion-del-modelo-349/03-clave-i-en-compras.png": {
+                    "url": "/MyFiles/2026/11/8553_forja_hvtyaw9vq8_03_clave_i_en_compras.png?myft=2d09f521ba419d4fac848ff7df87e09c925b6403348b8e3cc00c69b94198e174",
+                    "sha256": "df9e8b28db6842874bf3e240efc7ab9a684fefe163d2611cf501fc321f822c84"
+                }
+            }
         },
         "solucion-de-problemas-del-modelo-349.md": {
             "title": "Solución de problemas del modelo 349",
@@ -36,7 +77,8 @@
             "color": "warning",
             "keywords": "modelo 349, no aparece factura, sin datos, avisos, país UE, NIF-IVA, teléfono empresa, administrador",
             "controllers": "Modelo349",
-            "visibility": true
+            "visibility": true,
+            "idpublication": 5120
         }
     },
     "Dev": {
@@ -49,7 +91,8 @@
             "color": "info",
             "keywords": "api, rest, modelo 349, operaciones intracomunitarias, token, curl, mcp",
             "controllers": "ApiModelo349",
-            "visibility": true
+            "visibility": true,
+            "idpublication": 5121
         }
     }
 }
