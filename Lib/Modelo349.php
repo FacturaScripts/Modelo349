@@ -156,8 +156,8 @@ class Modelo349
 
     /**
      * Obtiene los operadores intracomunitarios del periodo y la empresa, acumulados por operador y clave
-     * de operación. Solo se incluyen las facturas no editables cuya operación es intracomunitaria (bienes
-     * o servicios), ya que la clave se deduce del campo operacion de la factura.
+     * de operación. Solo se incluyen las facturas no editables cuya operación es intracomunitaria (las del
+     * core y, en ventas, las que añade el plugin), ya que la clave se deduce del campo operacion de la factura.
      *
      * @param string $facturasTable tabla de facturas (facturascli o facturasprov).
      * @param string $terceroTable  tabla del tercero (clientes o proveedores).

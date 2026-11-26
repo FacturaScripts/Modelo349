@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Plugins\Modelo349\Lib;
 
-use FacturaScripts\Core\DataSrc\Ejercicios;
+use FacturaScripts\Dinamic\Lib\Clave349;
 use FacturaScripts\Core\DataSrc\Empresas;
 use FacturaScripts\Core\DataSrc\Paises;
 use FacturaScripts\Core\Tools;
@@ -39,7 +39,7 @@ class Modelo349File
      * Pos  1     : tipo registro = "1"
      * Pos  2-4   : modelo = "349"
      * Pos  5-8   : ejercicio YYYY
-     * Pos  9-17  : NIF declarante (9, derecha, ceros)
+     * Pos  9-17  : NIF declarante (9, derecha, espacios)
      * Pos  18-57 : nombre/razón social (40, izquierda, espacios)
      * Pos  58    : blanco
      * Pos  59-67 : teléfono (9, derecha, ceros)
@@ -57,6 +57,17 @@ class Modelo349File
      * Pos  187-390: blancos (204)
      * Pos  391-399: NIF representante legal (9, espacios)
      * Pos  400-500: blancos (101)
+     *
+     * @param int    $year                 año declarado.
+     * @param mixed  $company              empresa declarante (cifnif, nombre, telefono1 y administrador).
+     * @param string $periodo              '1T'-'4T' o '01'-'12'.
+     * @param int    $numOperators         número total de operadores.
+     * @param float  $totalBase            importe total de las operaciones.
+     * @param string $justificante         número de justificante (solo se usan los dígitos, máximo 13).
+     * @param string $declarationType      ''|'C'|'S'.
+     * @param string $justificanteAnterior justificante de la declaración anterior (solo con C o S).
+     *
+     * @return string registro de 500 posiciones más CRLF.
      */
     public static function buildTipo1(
         int $year,
@@ -125,13 +136,20 @@ class Modelo349File
      * Pos  179-195: NIF sustituto (17, solo clave C)
      * Pos  196-235: nombre sustituto (40, solo clave C)
      * Pos  236-500: blancos (265)
+     *
+     * @param int    $year          año declarado.
+     * @param string $nifDeclarante NIF de la empresa declarante.
+     * @param array  $op            operador: cifnif, nombre, codpais, base y clave.
+     *
+     * @return string registro de 500 posiciones más CRLF.
      */
     public static function buildTipo2(int $year, string $nifDeclarante, array $op): string
     {
         $nifDecl  = self::formatString($nifDeclarante, 9, ' ', STR_PAD_LEFT);
         $nifOp    = self::getNifOperador($op);
         $nombre   = self::formatString($op['nombre'] ?? '', 40, ' ', STR_PAD_RIGHT);
-        $clave    = self::formatString($op['clave'] ?? 'E', 1, ' ', STR_PAD_RIGHT);
+        // sin valor por defecto: generate() ya descarta los operadores sin una clave válida
+        $clave    = self::formatString($op['clave'] ?? '', 1, ' ', STR_PAD_RIGHT);
         $base     = self::formatAmountSplit((float)($op['base'] ?? 0.0), 11, 2);
 
         $record = '2'
@@ -152,6 +170,49 @@ class Modelo349File
     }
 
     /**
+     * Formatea un importe separando parte entera y decimal en campos de ancho fijo.
+     * Ejemplo: 1234.56, intLen=13, decLen=2 → "0000000001234" + "56" = "000000000123456" (15 chars)
+     * Se usa el valor absoluto del importe.
+     *
+     * @param float $amount importe.
+     * @param int   $intLen longitud de la parte entera.
+     * @param int   $decLen longitud de la parte decimal.
+     *
+     * @return string
+     */
+    public static function formatAmountSplit(float $amount, int $intLen, int $decLen): string
+    {
+        $amount  = round(abs($amount), 2);
+        $intPart = (int)floor($amount);
+        $decPart = (int)round(($amount - floor($amount)) * 100);
+
+        return str_pad((string)$intPart, $intLen, '0', STR_PAD_LEFT)
+             . str_pad((string)$decPart, $decLen, '0', STR_PAD_LEFT);
+    }
+
+    /**
+     * Formatea una cadena a la longitud indicada: sanitiza, convierte a mayúsculas, trunca y rellena.
+     *
+     * @param string $string  texto.
+     * @param int    $length  longitud final.
+     * @param string $padChar carácter de relleno.
+     * @param int    $align   STR_PAD_LEFT o STR_PAD_RIGHT.
+     *
+     * @return string
+     */
+    public static function formatString(string $string, int $length, string $padChar, int $align): string
+    {
+        $string = self::sanitize($string);
+        $string = mb_strtoupper($string);
+
+        if (mb_strlen($string) > $length) {
+            $string = mb_substr($string, 0, $length);
+        }
+
+        return str_pad($string, $length, $padChar, $align);
+    }
+
+    /**
      * Punto de entrada principal. Devuelve el contenido del fichero en ISO-8859-1.
      *
      * @param int      $year                 Año declarado (el de la fecha de inicio del ejercicio, no su código)
@@ -161,7 +222,7 @@ class Modelo349File
      * @param string   $justificante         Número de 13 dígitos; si vacío se genera automáticamente
      * @param string   $declarationType      ''|'C'|'S'
      * @param string   $justificanteAnterior Número de justificante de la declaración anterior
-     * @param int|null $idempresa            Empresa declarante; si no se indica, la del ejercicio cuyo código es el año
+     * @param int|null $idempresa            Empresa declarante; si no se indica, la empresa predeterminada
      * @return string
      */
     public static function generate(
@@ -175,9 +236,8 @@ class Modelo349File
         ?int $idempresa = null
     ): string {
         if (empty($idempresa)) {
-            // compatibilidad: sin empresa, se toma la del ejercicio cuyo código coincide con el año
-            $exercise = Ejercicios::get((string)$year);
-            $idempresa = $exercise->idempresa ?? 1;
+            // sin empresa, la predeterminada: el código del ejercicio no tiene por qué ser el año
+            $idempresa = (int)Tools::settings('default', 'idempresa');
         }
         $company = Empresas::get($idempresa);
 
@@ -185,9 +245,17 @@ class Modelo349File
             $justificante = '349' . $year . '000001';
         }
 
-        $operators = array_merge($salesData, $purchasesData);
-        $totalBase = array_sum(array_column($salesData, 'base'))
-                   + array_sum(array_column($purchasesData, 'base'));
+        // solo se declaran los operadores con una clave de operación válida: nunca se supone una clave
+        $operators = [];
+        foreach (array_merge($salesData, $purchasesData) as $op) {
+            if (Clave349::esValida($op['clave'] ?? null)) {
+                $operators[] = $op;
+                continue;
+            }
+
+            Tools::log()->warning('349-operator-without-key', ['%cifnif%' => $op['cifnif'] ?? '']);
+        }
+        $totalBase = array_sum(array_column($operators, 'base'));
 
         $content = self::buildTipo1(
             $year,
@@ -209,39 +277,14 @@ class Modelo349File
     }
 
     /**
-     * Formatea un importe separando parte entera y decimal en campos de ancho fijo.
-     * Ejemplo: 1234.56, intLen=13, decLen=2 → "0000000001234" + "56" = "000000000123456" (15 chars)
-     */
-    public static function formatAmountSplit(float $amount, int $intLen, int $decLen): string
-    {
-        $amount  = round(abs($amount), 2);
-        $intPart = (int)floor($amount);
-        $decPart = (int)round(($amount - floor($amount)) * 100);
-
-        return str_pad((string)$intPart, $intLen, '0', STR_PAD_LEFT)
-             . str_pad((string)$decPart, $decLen, '0', STR_PAD_LEFT);
-    }
-
-    /**
-     * Formatea una cadena a la longitud indicada: sanitiza, convierte a mayúsculas, trunca y rellena.
-     */
-    public static function formatString(string $string, int $length, string $padChar, int $align): string
-    {
-        $string = self::sanitize($string);
-        $string = mb_strtoupper($string);
-
-        if (mb_strlen($string) > $length) {
-            $string = mb_substr($string, 0, $length);
-        }
-
-        return str_pad($string, $length, $padChar, $align);
-    }
-
-    /**
      * Construye el campo NIF del operador comunitario (17 chars = 2 prefijo del NIF-IVA + 15 número).
      * El código de país son las dos primeras letras del NIF-IVA, que coinciden con el código ISO salvo en
      * Grecia (EL en lugar de GR), según Vies::vatPrefix() del core. Del número se quita tanto el código ISO
      * como el prefijo del NIF-IVA, y también los espacios, guiones y demás separadores.
+     *
+     * @param array $op operador con cifnif y codpais (código alfa-3 del país).
+     *
+     * @return string 17 caracteres.
      */
     public static function getNifOperador(array $op): string
     {
@@ -268,6 +311,11 @@ class Modelo349File
 
     /**
      * Calcula las fechas de inicio y fin para el período dado.
+     *
+     * @param string $periodo '1T'-'4T' o '01'-'12' (un mes inválido se trata como enero).
+     * @param int    $year    año.
+     *
+     * @return array ['from' => d-m-Y, 'to' => d-m-Y].
      */
     public static function getPeriodDates(string $periodo, int $year): array
     {
@@ -296,6 +344,10 @@ class Modelo349File
 
     /**
      * Elimina tildes y caracteres no ASCII válidos para ficheros AEAT.
+     *
+     * @param string|null $txt texto original.
+     *
+     * @return string texto sin tildes ni HTML; vacío si es null.
      */
     public static function sanitize(?string $txt): string
     {

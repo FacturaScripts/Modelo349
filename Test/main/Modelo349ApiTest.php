@@ -21,6 +21,7 @@ namespace FacturaScripts\Test\Plugins;
 
 use FacturaScripts\Core\Lib\Calculator;
 use FacturaScripts\Core\Lib\InvoiceOperation;
+use FacturaScripts\Dinamic\Lib\Clave349;
 use FacturaScripts\Dinamic\Lib\Modelo349;
 use FacturaScripts\Dinamic\Lib\Modelo349Api;
 use FacturaScripts\Dinamic\Lib\Modelo349File;
@@ -174,6 +175,41 @@ final class Modelo349ApiTest extends TestCase
     }
 
     /**
+     * Una venta con una operación del plugin (triangular) se declara con su clave (T), sale en los totales
+     * por clave y no en los de entregas ni servicios, y el TXT la escribe con esa clave.
+     */
+    public function testTriangularSaleHasKeyT(): void
+    {
+        [$customer, $contact, $invoice, $status] = $this->createIntraInvoice(500, '', Clave349::OPERACION_TRIANGULAR);
+
+        $result = Modelo349Api::build(['codejercicio' => $invoice->codejercicio, 'periodo' => $this->currentQuarter()]);
+        $this->assertEquals(200, $result['code']);
+
+        $body = $result['body'];
+        $row = $this->findRow($body['detalle']['ventas'], $customer->cifnif);
+        $this->assertNotNull($row, 'la venta triangular debe aparecer en las ventas');
+        $this->assertEquals('T', $row['clave']);
+        $this->assertEquals(round($invoice->neto, 2), $body['resumen']['totales_por_clave']['T']);
+        $this->assertEquals(
+            round($body['resumen']['total_ventas'], 2),
+            round(array_sum(array_intersect_key($body['resumen']['totales_por_clave'], array_flip(['E', 'S', 'T']))), 2)
+        );
+
+        $calc = Modelo349::calculate($invoice->codejercicio, Modelo349Api::internalPeriod($this->currentQuarter()));
+        $txt = Modelo349File::generate($calc['year'], '1T', $calc['sales'], [], '', '', '', (int)$invoice->idempresa);
+        $found = false;
+        foreach (array_filter(explode("\r\n", $txt)) as $line) {
+            if ($line[0] === '2' && str_contains($line, substr($customer->cifnif, 2))) {
+                $this->assertEquals('T', $line[132]);
+                $found = true;
+            }
+        }
+        $this->assertTrue($found, 'el TXT debe llevar el registro del operador triangular');
+
+        $this->deleteIntraInvoice($customer, $contact, $invoice, $status);
+    }
+
+    /**
      * Fallo corregido: el 349 sumaba las facturas de todas las empresas y tomaba el código del ejercicio
      * como año. Con dos empresas con facturas en el mismo año, cada una solo ve las suyas, y el año del
      * ejercicio de la segunda empresa (con código 00AA) se obtiene de su fecha de inicio.
@@ -240,7 +276,7 @@ final class Modelo349ApiTest extends TestCase
      *
      * @return array [Cliente, Contacto, FacturaCliente, estado editable anterior]
      */
-    private function createIntraInvoice(float $amount, string $codalmacen = ''): array
+    private function createIntraInvoice(float $amount, string $codalmacen = '', string $operacion = InvoiceOperation::INTRA_COMMUNITY): array
     {
         $customer = new Cliente();
         $customer->cifnif = 'DE' . mt_rand(100000000, 999999999);
@@ -260,7 +296,7 @@ final class Modelo349ApiTest extends TestCase
             $invoice->codalmacen = $codalmacen;
             $this->assertTrue($invoice->setDate(date('d-m-Y'), $invoice->hora), 'cant-set-date');
         }
-        $invoice->operacion = InvoiceOperation::INTRA_COMMUNITY;
+        $invoice->operacion = $operacion;
         $this->assertTrue($invoice->save(), 'cant-create-invoice');
 
         $line = $invoice->getNewLine();

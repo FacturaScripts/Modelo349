@@ -19,6 +19,8 @@
 
 namespace FacturaScripts\Test\Plugins;
 
+use FacturaScripts\Core\DataSrc\Empresas;
+use FacturaScripts\Core\Tools;
 use FacturaScripts\Dinamic\Lib\Modelo349File;
 use FacturaScripts\Dinamic\Model\Ejercicio;
 use FacturaScripts\Test\Traits\DefaultSettingsTrait;
@@ -26,6 +28,8 @@ use FacturaScripts\Test\Traits\LogErrorsTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Tests de Lib/Modelo349File: formato de los registros del TXT, importes, textos, NIF del operador y fechas del periodo.
+ *
  * @author Esteban Sánchez Martínez <esteban@factura.city>
  */
 final class Modelo349FileTest extends TestCase
@@ -38,43 +42,184 @@ final class Modelo349FileTest extends TestCase
         self::setDefaultSettings();
     }
 
-    private function getFirstExercise(): ?Ejercicio
+    public function testExportClavePurchasesIsA(): void
     {
-        $ejercicio = new Ejercicio();
-        $exercises = $ejercicio->all();
-        return empty($exercises) ? null : $exercises[0];
+        $lines = $this->exportLines([], [$this->samplePurchasesOperator()]);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        $this->assertEquals('A', $lines[1][132], 'La clave de adquisición intracomunitaria debe ser A');
     }
 
-    private function sampleSalesOperator(): array
+    public function testExportClavePurchasesServicesIsI(): void
     {
-        return [
-            'cifnif' => 'DE123456789',
-            'nombre' => 'Muller GmbH',
-            'codpais' => 'DEU',
-            'base'   => 8200.00,
-            'clave'  => 'E',
-        ];
+        $operator = array_merge($this->samplePurchasesOperator(), ['clave' => 'I']);
+        $lines = $this->exportLines([], [$operator]);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        $this->assertEquals('I', $lines[1][132], 'La clave de adquisición intracomunitaria de servicios debe ser I');
     }
 
-    private function samplePurchasesOperator(): array
+    public function testExportClaveSalesIsE(): void
     {
-        return [
-            'cifnif' => 'FR12345678901',
-            'nombre' => 'Dupont SA',
-            'codpais' => 'FRA',
-            'base'   => 4000.00,
-            'clave'  => 'A',
-        ];
+        $lines = $this->exportLines([$this->sampleSalesOperator()], []);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        // Clave operación: pos 133 → índice 132
+        $this->assertEquals('E', $lines[1][132], 'La clave de entrega intracomunitaria debe ser E');
     }
 
-    private function exportLines(array $sales = [], array $purchases = []): array
+    public function testExportClaveSalesServicesIsS(): void
+    {
+        $operator = array_merge($this->sampleSalesOperator(), ['clave' => 'S']);
+        $lines = $this->exportLines([$operator], []);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        $this->assertEquals('S', $lines[1][132], 'La clave de prestación intracomunitaria de servicios debe ser S');
+    }
+
+    public function testExportEmptyData(): void
+    {
+        $lines = $this->exportLines([], []);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        $this->assertCount(1, $lines, 'Sin operadores solo debe existir el registro Tipo 1');
+        $this->assertEquals(500, strlen($lines[0]));
+        $this->assertEquals('1', $lines[0][0]);
+    }
+
+    public function testExportModeloNumber(): void
+    {
+        $lines = $this->exportLines([$this->sampleSalesOperator()], []);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        $this->assertEquals('349', substr($lines[0], 1, 3), 'El modelo debe ser 349 en el Tipo 1');
+        $this->assertEquals('349', substr($lines[1], 1, 3), 'El modelo debe ser 349 en el Tipo 2');
+    }
+
+    public function testExportNormalDeclaracionType(): void
+    {
+        $lines = $this->exportLines([$this->sampleSalesOperator()], []);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        // Tipo declaración: pos 121 → índice 120
+        $this->assertEquals(' ', $lines[0][120], 'Una declaración normal debe tener espacio en pos 121');
+    }
+
+    public function testExportOperatorsCount(): void
+    {
+        $lines = $this->exportLines([$this->sampleSalesOperator()], [$this->samplePurchasesOperator()]);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        // Nº total operadores: pos 138-146 → índice 137, 9 chars
+        $numOps = substr($lines[0], 137, 9);
+        $this->assertEquals('000000002', $numOps, 'El Tipo 1 debe reflejar 2 operadores');
+    }
+
+    public function testExportPeriodField(): void
+    {
+        $lines = $this->exportLines([$this->sampleSalesOperator()], []);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        // Período: pos 136-137 → índice 135, 2 chars
+        $period = substr($lines[0], 135, 2);
+        $this->assertEquals('2T', $period, 'El período debe ser 2T');
+    }
+
+    public function testExportRecordLength(): void
+    {
+        $lines = $this->exportLines([$this->sampleSalesOperator()], [$this->samplePurchasesOperator()]);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        foreach ($lines as $line) {
+            $this->assertEquals(500, strlen($line), 'Cada registro debe tener exactamente 500 caracteres');
+        }
+    }
+
+    public function testExportRecordTypes(): void
+    {
+        $lines = $this->exportLines([$this->sampleSalesOperator()], [$this->samplePurchasesOperator()]);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        $this->assertCount(3, $lines, 'Debe haber 3 registros: 1 Tipo 1 + 2 Tipo 2');
+        $this->assertEquals('1', $lines[0][0], 'El primer registro debe ser Tipo 1');
+        $this->assertEquals('2', $lines[1][0], 'El segundo registro debe ser Tipo 2');
+        $this->assertEquals('2', $lines[2][0], 'El tercer registro debe ser Tipo 2');
+    }
+
+    public function testExportSkipsOperatorsWithoutValidKey(): void
+    {
+        $withoutKey = $this->sampleSalesOperator();
+        unset($withoutKey['clave']);
+        $invalidKey = array_merge($this->samplePurchasesOperator(), ['clave' => 'X']);
+
+        $lines = $this->exportLines([$withoutKey, $this->sampleSalesOperator()], [$invalidKey]);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+
+        // solo queda el operador con clave E: un registro de tipo 2, un operador y su importe en el tipo 1
+        $this->assertCount(2, $lines, 'Los operadores sin una clave válida no deben generar registro');
+        $this->assertEquals('E', $lines[1][132]);
+        $this->assertEquals('000000001', substr($lines[0], 137, 9), 'Solo debe contarse un operador');
+        $this->assertEquals('000000000820000', substr($lines[0], 146, 15), 'El total solo debe sumar el operador válido');
+    }
+
+    public function testExportTotalBase(): void
+    {
+        $lines = $this->exportLines([$this->sampleSalesOperator()], [$this->samplePurchasesOperator()]);
+        if (empty($lines)) {
+            $this->markTestSkipped('No hay ejercicios disponibles');
+        }
+        // Importe total: pos 147-161 → índice 146, 15 chars (8200 + 4000 = 12200)
+        $totalField = substr($lines[0], 146, 15);
+        $this->assertEquals('000000001220000', $totalField, 'El importe total debe ser 12.200,00 €');
+    }
+
+    public function testExportTotalReset(): void
     {
         $exercise = $this->getFirstExercise();
         if ($exercise === null) {
-            return [];
+            $this->markTestSkipped('No hay ejercicios disponibles');
         }
-        $result = Modelo349File::generate((int)$exercise->codejercicio, '2T', $sales, $purchases);
-        return array_values(array_filter(explode("\r\n", $result)));
+        $year = (int)$exercise->codejercicio;
+
+        $result1 = Modelo349File::generate($year, '2T', [$this->sampleSalesOperator()], []);
+        $result2 = Modelo349File::generate($year, '2T', [$this->sampleSalesOperator()], []);
+
+        $lines1 = array_values(array_filter(explode("\r\n", $result1)));
+        $lines2 = array_values(array_filter(explode("\r\n", $result2)));
+
+        $this->assertEquals($lines1[0], $lines2[0], 'El total no debe acumularse entre llamadas a generate()');
+    }
+
+    public function testExportWithoutCompanyUsesDefaultCompany(): void
+    {
+        $company = Empresas::get((int)Tools::settings('default', 'idempresa'));
+        $result = Modelo349File::generate(2026, '1T', [$this->sampleSalesOperator()], []);
+        $lines = array_values(array_filter(explode("\r\n", $result)));
+
+        $expected = Modelo349File::formatString($company->cifnif ?? '', 9, ' ', STR_PAD_LEFT);
+        $this->assertEquals($expected, substr($lines[0], 8, 9), 'Sin empresa debe declarar la predeterminada');
+        $this->assertEquals('2026', substr($lines[0], 4, 4), 'El año es el indicado, no un código de ejercicio');
+    }
+
+    public function testFormatAmountSplitAlwaysCorrectLength(): void
+    {
+        foreach ([0.0, 1.0, 9999.99, 100000.0, 0.01] as $amount) {
+            $result = Modelo349File::formatAmountSplit($amount, 11, 2);
+            $this->assertEquals(13, strlen($result), "formatAmountSplit($amount) debe retornar 13 caracteres");
+        }
     }
 
     public function testFormatAmountSplitTipo1(): void
@@ -107,32 +252,10 @@ final class Modelo349FileTest extends TestCase
         $this->assertEquals(13, strlen($result));
     }
 
-    public function testFormatAmountSplitAlwaysCorrectLength(): void
+    public function testFormatStringConvertsToUppercase(): void
     {
-        foreach ([0.0, 1.0, 9999.99, 100000.0, 0.01] as $amount) {
-            $result = Modelo349File::formatAmountSplit($amount, 11, 2);
-            $this->assertEquals(13, strlen($result), "formatAmountSplit($amount) debe retornar 13 caracteres");
-        }
-    }
-
-    public function testFormatStringPadsRight(): void
-    {
-        $result = Modelo349File::formatString('hola', 10, ' ', STR_PAD_RIGHT);
-        $this->assertEquals('HOLA      ', $result);
-        $this->assertEquals(10, strlen($result));
-    }
-
-    public function testFormatStringPadsLeft(): void
-    {
-        $result = Modelo349File::formatString('42', 9, '0', STR_PAD_LEFT);
-        $this->assertEquals('000000042', $result);
-    }
-
-    public function testFormatStringTruncates(): void
-    {
-        $result = Modelo349File::formatString('abcdefghij', 5, ' ', STR_PAD_RIGHT);
-        $this->assertEquals('ABCDE', $result);
-        $this->assertEquals(5, strlen($result));
+        $result = Modelo349File::formatString('empresa sl', 12, ' ', STR_PAD_RIGHT);
+        $this->assertStringStartsWith('EMPRESA SL', $result);
     }
 
     public function testFormatStringEmpty(): void
@@ -142,49 +265,43 @@ final class Modelo349FileTest extends TestCase
         $this->assertEquals(9, strlen($result));
     }
 
+    public function testFormatStringPadsLeft(): void
+    {
+        $result = Modelo349File::formatString('42', 9, '0', STR_PAD_LEFT);
+        $this->assertEquals('000000042', $result);
+    }
+
+    public function testFormatStringPadsRight(): void
+    {
+        $result = Modelo349File::formatString('hola', 10, ' ', STR_PAD_RIGHT);
+        $this->assertEquals('HOLA      ', $result);
+        $this->assertEquals(10, strlen($result));
+    }
+
     public function testFormatStringRemovesAccents(): void
     {
         $result = Modelo349File::formatString('café résumé', 15, ' ', STR_PAD_RIGHT);
         $this->assertStringStartsWith('CAFE RESUME', $result);
     }
 
-    public function testFormatStringConvertsToUppercase(): void
+    public function testFormatStringTruncates(): void
     {
-        $result = Modelo349File::formatString('empresa sl', 12, ' ', STR_PAD_RIGHT);
-        $this->assertStringStartsWith('EMPRESA SL', $result);
+        $result = Modelo349File::formatString('abcdefghij', 5, ' ', STR_PAD_RIGHT);
+        $this->assertEquals('ABCDE', $result);
+        $this->assertEquals(5, strlen($result));
     }
 
-    public function testSanitizeRemovesAccents(): void
+    public function testGetNifOperadorAlwaysReturns17Chars(): void
     {
-        // Los acentos se sustituyen por su equivalente en mayúscula
-        $this->assertEquals('cafE', Modelo349File::sanitize('café'));
-        $this->assertEquals('AEIOU', Modelo349File::sanitize('áéíóú'));
-        $this->assertEquals('AEIOU', Modelo349File::sanitize('ÁÉÍÓÚ'));
-    }
-
-    public function testSanitizeConvertsEnyeToN(): void
-    {
-        // En Modelo349 la Ñ se convierte a N (a diferencia del Modelo347)
-        $this->assertStringNotContainsString('ñ', Modelo349File::sanitize('señor'));
-        $this->assertStringNotContainsString('Ñ', Modelo349File::sanitize('España'));
-    }
-
-    public function testSanitizeConvertsUmlautToU(): void
-    {
-        // sanitize sustituye ü→U pero no hace uppercase del resto (eso lo hace formatString)
-        $this->assertEquals('MUller', Modelo349File::sanitize('Müller'));
-        // A través de formatString el resultado es completamente en mayúsculas
-        $this->assertEquals('MULLER    ', Modelo349File::formatString('Müller', 10, ' ', STR_PAD_RIGHT));
-    }
-
-    public function testSanitizeNull(): void
-    {
-        $this->assertEquals('', Modelo349File::sanitize(null));
-    }
-
-    public function testSanitizeEmpty(): void
-    {
-        $this->assertEquals('', Modelo349File::sanitize(''));
+        $operators = [
+            ['cifnif' => 'DE123456789',   'codpais' => 'DEU'],
+            ['cifnif' => 'FR12345678901', 'codpais' => 'FRA'],
+            ['cifnif' => 'IT01234567890', 'codpais' => 'ITA'],
+        ];
+        foreach ($operators as $op) {
+            $result = Modelo349File::getNifOperador($op);
+            $this->assertEquals(17, strlen($result), "getNifOperador debe retornar 17 caracteres para {$op['cifnif']}");
+        }
     }
 
     public function testGetNifOperadorExtractsCountryPrefix(): void
@@ -202,19 +319,6 @@ final class Modelo349FileTest extends TestCase
         foreach (['EL123456789', 'GR123456789', '123456789', 'el-123 456 789'] as $cifnif) {
             $result = Modelo349File::getNifOperador(['cifnif' => $cifnif, 'codpais' => 'GRC']);
             $this->assertSame('EL123456789      ', $result, "NIF del operador griego incorrecto para {$cifnif}");
-        }
-    }
-
-    public function testGetNifOperadorAlwaysReturns17Chars(): void
-    {
-        $operators = [
-            ['cifnif' => 'DE123456789',   'codpais' => 'DEU'],
-            ['cifnif' => 'FR12345678901', 'codpais' => 'FRA'],
-            ['cifnif' => 'IT01234567890', 'codpais' => 'ITA'],
-        ];
-        foreach ($operators as $op) {
-            $result = Modelo349File::getNifOperador($op);
-            $this->assertEquals(17, strlen($result), "getNifOperador debe retornar 17 caracteres para {$op['cifnif']}");
         }
     }
 
@@ -246,20 +350,6 @@ final class Modelo349FileTest extends TestCase
         $this->assertEquals('31-12-2026', $dates['to']);
     }
 
-    public function testGetPeriodDatesJanuary(): void
-    {
-        $dates = Modelo349File::getPeriodDates('01', 2026);
-        $this->assertEquals('01-01-2026', $dates['from']);
-        $this->assertEquals('31-01-2026', $dates['to']);
-    }
-
-    public function testGetPeriodDatesJune(): void
-    {
-        $dates = Modelo349File::getPeriodDates('06', 2026);
-        $this->assertEquals('01-06-2026', $dates['from']);
-        $this->assertEquals('30-06-2026', $dates['to']);
-    }
-
     public function testGetPeriodDatesFebruary(): void
     {
         $dates = Modelo349File::getPeriodDates('02', 2026);
@@ -274,148 +364,90 @@ final class Modelo349FileTest extends TestCase
         $this->assertEquals('29-02-2024', $dates['to']);
     }
 
-
-    public function testExportRecordLength(): void
+    public function testGetPeriodDatesJanuary(): void
     {
-        $lines = $this->exportLines([$this->sampleSalesOperator()], [$this->samplePurchasesOperator()]);
-        if (empty($lines)) {
-            $this->markTestSkipped('No hay ejercicios disponibles');
-        }
-        foreach ($lines as $line) {
-            $this->assertEquals(500, strlen($line), 'Cada registro debe tener exactamente 500 caracteres');
-        }
+        $dates = Modelo349File::getPeriodDates('01', 2026);
+        $this->assertEquals('01-01-2026', $dates['from']);
+        $this->assertEquals('31-01-2026', $dates['to']);
     }
 
-    public function testExportRecordTypes(): void
+    public function testGetPeriodDatesJune(): void
     {
-        $lines = $this->exportLines([$this->sampleSalesOperator()], [$this->samplePurchasesOperator()]);
-        if (empty($lines)) {
-            $this->markTestSkipped('No hay ejercicios disponibles');
-        }
-        $this->assertCount(3, $lines, 'Debe haber 3 registros: 1 Tipo 1 + 2 Tipo 2');
-        $this->assertEquals('1', $lines[0][0], 'El primer registro debe ser Tipo 1');
-        $this->assertEquals('2', $lines[1][0], 'El segundo registro debe ser Tipo 2');
-        $this->assertEquals('2', $lines[2][0], 'El tercer registro debe ser Tipo 2');
+        $dates = Modelo349File::getPeriodDates('06', 2026);
+        $this->assertEquals('01-06-2026', $dates['from']);
+        $this->assertEquals('30-06-2026', $dates['to']);
     }
 
-    public function testExportModeloNumber(): void
+    public function testSanitizeConvertsEnyeToN(): void
     {
-        $lines = $this->exportLines([$this->sampleSalesOperator()], []);
-        if (empty($lines)) {
-            $this->markTestSkipped('No hay ejercicios disponibles');
-        }
-        $this->assertEquals('349', substr($lines[0], 1, 3), 'El modelo debe ser 349 en el Tipo 1');
-        $this->assertEquals('349', substr($lines[1], 1, 3), 'El modelo debe ser 349 en el Tipo 2');
+        // En Modelo349 la Ñ se convierte a N (a diferencia del Modelo347)
+        $this->assertStringNotContainsString('ñ', Modelo349File::sanitize('señor'));
+        $this->assertStringNotContainsString('Ñ', Modelo349File::sanitize('España'));
     }
 
-    public function testExportEmptyData(): void
+    public function testSanitizeConvertsUmlautToU(): void
     {
-        $lines = $this->exportLines([], []);
-        if (empty($lines)) {
-            $this->markTestSkipped('No hay ejercicios disponibles');
-        }
-        $this->assertCount(1, $lines, 'Sin operadores solo debe existir el registro Tipo 1');
-        $this->assertEquals(500, strlen($lines[0]));
-        $this->assertEquals('1', $lines[0][0]);
+        // sanitize sustituye ü→U pero no hace uppercase del resto (eso lo hace formatString)
+        $this->assertEquals('MUller', Modelo349File::sanitize('Müller'));
+        // A través de formatString el resultado es completamente en mayúsculas
+        $this->assertEquals('MULLER    ', Modelo349File::formatString('Müller', 10, ' ', STR_PAD_RIGHT));
     }
 
-    public function testExportOperatorsCount(): void
+    public function testSanitizeEmpty(): void
     {
-        $lines = $this->exportLines([$this->sampleSalesOperator()], [$this->samplePurchasesOperator()]);
-        if (empty($lines)) {
-            $this->markTestSkipped('No hay ejercicios disponibles');
-        }
-        // Nº total operadores: pos 138-146 → índice 137, 9 chars
-        $numOps = substr($lines[0], 137, 9);
-        $this->assertEquals('000000002', $numOps, 'El Tipo 1 debe reflejar 2 operadores');
+        $this->assertEquals('', Modelo349File::sanitize(''));
     }
 
-    public function testExportTotalBase(): void
+    public function testSanitizeNull(): void
     {
-        $lines = $this->exportLines([$this->sampleSalesOperator()], [$this->samplePurchasesOperator()]);
-        if (empty($lines)) {
-            $this->markTestSkipped('No hay ejercicios disponibles');
-        }
-        // Importe total: pos 147-161 → índice 146, 15 chars (8200 + 4000 = 12200)
-        $totalField = substr($lines[0], 146, 15);
-        $this->assertEquals('000000001220000', $totalField, 'El importe total debe ser 12.200,00 €');
+        $this->assertEquals('', Modelo349File::sanitize(null));
     }
 
-    public function testExportClaveSalesIsE(): void
+    public function testSanitizeRemovesAccents(): void
     {
-        $lines = $this->exportLines([$this->sampleSalesOperator()], []);
-        if (empty($lines)) {
-            $this->markTestSkipped('No hay ejercicios disponibles');
-        }
-        // Clave operación: pos 133 → índice 132
-        $this->assertEquals('E', $lines[1][132], 'La clave de entrega intracomunitaria debe ser E');
+        // Los acentos se sustituyen por su equivalente en mayúscula
+        $this->assertEquals('cafE', Modelo349File::sanitize('café'));
+        $this->assertEquals('AEIOU', Modelo349File::sanitize('áéíóú'));
+        $this->assertEquals('AEIOU', Modelo349File::sanitize('ÁÉÍÓÚ'));
     }
 
-    public function testExportClavePurchasesIsA(): void
-    {
-        $lines = $this->exportLines([], [$this->samplePurchasesOperator()]);
-        if (empty($lines)) {
-            $this->markTestSkipped('No hay ejercicios disponibles');
-        }
-        $this->assertEquals('A', $lines[1][132], 'La clave de adquisición intracomunitaria debe ser A');
-    }
-
-    public function testExportClaveSalesServicesIsS(): void
-    {
-        $operator = array_merge($this->sampleSalesOperator(), ['clave' => 'S']);
-        $lines = $this->exportLines([$operator], []);
-        if (empty($lines)) {
-            $this->markTestSkipped('No hay ejercicios disponibles');
-        }
-        $this->assertEquals('S', $lines[1][132], 'La clave de prestación intracomunitaria de servicios debe ser S');
-    }
-
-    public function testExportClavePurchasesServicesIsI(): void
-    {
-        $operator = array_merge($this->samplePurchasesOperator(), ['clave' => 'I']);
-        $lines = $this->exportLines([], [$operator]);
-        if (empty($lines)) {
-            $this->markTestSkipped('No hay ejercicios disponibles');
-        }
-        $this->assertEquals('I', $lines[1][132], 'La clave de adquisición intracomunitaria de servicios debe ser I');
-    }
-
-    public function testExportNormalDeclaracionType(): void
-    {
-        $lines = $this->exportLines([$this->sampleSalesOperator()], []);
-        if (empty($lines)) {
-            $this->markTestSkipped('No hay ejercicios disponibles');
-        }
-        // Tipo declaración: pos 121 → índice 120
-        $this->assertEquals(' ', $lines[0][120], 'Una declaración normal debe tener espacio en pos 121');
-    }
-
-    public function testExportPeriodField(): void
-    {
-        $lines = $this->exportLines([$this->sampleSalesOperator()], []);
-        if (empty($lines)) {
-            $this->markTestSkipped('No hay ejercicios disponibles');
-        }
-        // Período: pos 136-137 → índice 135, 2 chars
-        $period = substr($lines[0], 135, 2);
-        $this->assertEquals('2T', $period, 'El período debe ser 2T');
-    }
-
-    public function testExportTotalReset(): void
+    private function exportLines(array $sales = [], array $purchases = []): array
     {
         $exercise = $this->getFirstExercise();
         if ($exercise === null) {
-            $this->markTestSkipped('No hay ejercicios disponibles');
+            return [];
         }
-        $year = (int)$exercise->codejercicio;
+        $result = Modelo349File::generate((int)$exercise->codejercicio, '2T', $sales, $purchases);
+        return array_values(array_filter(explode("\r\n", $result)));
+    }
 
-        $result1 = Modelo349File::generate($year, '2T', [$this->sampleSalesOperator()], []);
-        $result2 = Modelo349File::generate($year, '2T', [$this->sampleSalesOperator()], []);
+    private function getFirstExercise(): ?Ejercicio
+    {
+        $ejercicio = new Ejercicio();
+        $exercises = $ejercicio->all();
+        return empty($exercises) ? null : $exercises[0];
+    }
 
-        $lines1 = array_values(array_filter(explode("\r\n", $result1)));
-        $lines2 = array_values(array_filter(explode("\r\n", $result2)));
+    private function samplePurchasesOperator(): array
+    {
+        return [
+            'cifnif' => 'FR12345678901',
+            'nombre' => 'Dupont SA',
+            'codpais' => 'FRA',
+            'base'   => 4000.00,
+            'clave'  => 'A',
+        ];
+    }
 
-        $this->assertEquals($lines1[0], $lines2[0], 'El total no debe acumularse entre llamadas a generate()');
+    private function sampleSalesOperator(): array
+    {
+        return [
+            'cifnif' => 'DE123456789',
+            'nombre' => 'Muller GmbH',
+            'codpais' => 'DEU',
+            'base'   => 8200.00,
+            'clave'  => 'E',
+        ];
     }
 
     protected function tearDown(): void

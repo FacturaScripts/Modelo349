@@ -37,7 +37,7 @@ use FacturaScripts\Dinamic\Lib\Modelo349Api;
 class ApiModelo349 extends ApiController
 {
     /** Parámetros de la query string que acepta el endpoint. */
-    private const PARAMS = ['codejercicio', 'idempresa', 'anio', 'periodo', 'detalle', 'codserie'];
+    private const PARAMS = ['codejercicio', 'idempresa', 'anio', 'periodo', 'codserie'];
 
     /**
      * Valida el método, lee los parámetros y devuelve los datos del modelo.

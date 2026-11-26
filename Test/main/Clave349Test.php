@@ -30,14 +30,15 @@ use PHPUnit\Framework\TestCase;
  */
 final class Clave349Test extends TestCase
 {
-    public function testVentasDeBienesSonClaveE(): void
+    public function testClavesValidasSonLasDelDisenoDeLaAeat(): void
     {
-        $this->assertSame('E', Clave349::porOperacion(true, InvoiceOperation::INTRA_COMMUNITY));
-    }
+        foreach (['A', 'C', 'D', 'E', 'H', 'I', 'M', 'R', 'S', 'T'] as $clave) {
+            $this->assertTrue(Clave349::esValida($clave), $clave);
+        }
 
-    public function testVentasDeServiciosSonClaveS(): void
-    {
-        $this->assertSame('S', Clave349::porOperacion(true, InvoiceOperation::INTRA_COMMUNITY_SERVICES));
+        foreach ([null, '', 'e', 'X', 'EE'] as $clave) {
+            $this->assertFalse(Clave349::esValida($clave), (string)$clave);
+        }
     }
 
     public function testComprasDeBienesSonClaveA(): void
@@ -50,6 +51,40 @@ final class Clave349Test extends TestCase
         $this->assertSame('I', Clave349::porOperacion(false, InvoiceOperation::INTRA_COMMUNITY_SERVICES));
     }
 
+    public function testOperacionesDeclarablesSoloSonLasIntracomunitarias(): void
+    {
+        $core = [InvoiceOperation::INTRA_COMMUNITY, InvoiceOperation::INTRA_COMMUNITY_SERVICES];
+        $plugin = array_keys(Clave349::OPERACIONES_PLUGIN);
+        $this->assertSame(array_merge($core, $plugin), Clave349::operaciones(true));
+        $this->assertSame($core, Clave349::operaciones(false));
+    }
+
+    public function testOperacionesDelPluginSoloSonDeVentas(): void
+    {
+        $esperado = [
+            Clave349::OPERACION_TRIANGULAR => 'T',
+            Clave349::OPERACION_POST_IMPORTACION => 'M',
+            Clave349::OPERACION_POST_IMPORTACION_REPRESENTANTE => 'H',
+            Clave349::OPERACION_CONSIGNA => 'R',
+            Clave349::OPERACION_CONSIGNA_DEVOLUCION => 'D',
+        ];
+        foreach ($esperado as $operacion => $clave) {
+            $this->assertSame($clave, Clave349::porOperacion(true, $operacion), $operacion);
+            $this->assertNull(Clave349::porOperacion(false, $operacion), $operacion);
+            $this->assertLessThanOrEqual(InvoiceOperation::MAX_KEY_LENGTH, strlen($operacion), $operacion);
+        }
+    }
+
+    public function testRegisterAnadeLasOperacionesALasVentas(): void
+    {
+        Clave349::register();
+        foreach (Clave349::OPERACIONES_PLUGIN as $operacion => $traduccion) {
+            $this->assertSame($traduccion, InvoiceOperation::get($operacion), $operacion);
+            $this->assertArrayHasKey($operacion, InvoiceOperation::allForSales());
+            $this->assertArrayNotHasKey($operacion, InvoiceOperation::allForPurchases());
+        }
+    }
+
     public function testOperacionesNoIntracomunitariasNoTienenClave(): void
     {
         foreach ([true, false] as $esVenta) {
@@ -60,10 +95,13 @@ final class Clave349Test extends TestCase
         }
     }
 
-    public function testOperacionesDeclarablesSoloSonLasIntracomunitarias(): void
+    public function testVentasDeBienesSonClaveE(): void
     {
-        $esperado = [InvoiceOperation::INTRA_COMMUNITY, InvoiceOperation::INTRA_COMMUNITY_SERVICES];
-        $this->assertSame($esperado, Clave349::operaciones(true));
-        $this->assertSame($esperado, Clave349::operaciones(false));
+        $this->assertSame('E', Clave349::porOperacion(true, InvoiceOperation::INTRA_COMMUNITY));
+    }
+
+    public function testVentasDeServiciosSonClaveS(): void
+    {
+        $this->assertSame('S', Clave349::porOperacion(true, InvoiceOperation::INTRA_COMMUNITY_SERVICES));
     }
 }

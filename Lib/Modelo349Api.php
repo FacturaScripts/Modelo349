@@ -95,11 +95,10 @@ class Modelo349Api
         $sales = self::detailRows($result['sales']);
         $purchases = self::detailRows($result['purchases']);
 
+        // total por clave: siempre E, S, A e I, y las demás claves (T, M, H, R, D) solo si tienen operaciones
         $byKey = ['E' => 0.0, 'S' => 0.0, 'A' => 0.0, 'I' => 0.0];
         foreach (array_merge($sales, $purchases) as $row) {
-            if (isset($byKey[$row['clave']])) {
-                $byKey[$row['clave']] += $row['base'];
-            }
+            $byKey[$row['clave']] = ($byKey[$row['clave']] ?? 0.0) + $row['base'];
         }
         $totalSales = round(array_sum(array_column($sales, 'base')), 2);
         $totalPurchases = round(array_sum(array_column($purchases, 'base')), 2);
@@ -124,6 +123,7 @@ class Modelo349Api
                     'total_servicios_prestados' => round($byKey['S'], 2),
                     'total_adquisiciones' => round($byKey['A'], 2),
                     'total_servicios_adquiridos' => round($byKey['I'], 2),
+                    'totales_por_clave' => array_map(fn($total) => round($total, 2), $byKey),
                     'total_ventas' => $totalSales,
                     'total_compras' => $totalPurchases,
                 ],
@@ -162,7 +162,8 @@ class Modelo349Api
 
     /**
      * Normaliza un periodo: mayúsculas, sin espacios y con los alias admitidos
-     * (1T-4T → T1-T4, 1-12 → 01-12, ANNUAL/Y/A/0A → ANUAL).
+     * (1T-4T → T1-T4, 1-12 → 01-12). El modelo 349 no tiene periodo anual, así que
+     * cualquier otro valor se devuelve tal cual y no supera la validación de PERIODS.
      *
      * @param string|null $periodo periodo tal y como llega en la petición.
      *
@@ -171,9 +172,6 @@ class Modelo349Api
     public static function normalizePeriod(?string $periodo): string
     {
         $value = strtoupper(preg_replace('/\s+/', '', (string)$periodo));
-        if (in_array($value, ['ANUAL', 'ANNUAL', 'Y', 'A', '0A'], true)) {
-            return 'ANUAL';
-        }
 
         if (preg_match('/^([1-4])T$/', $value, $matches)) {
             return 'T' . $matches[1];

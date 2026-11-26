@@ -22,6 +22,7 @@ namespace FacturaScripts\Plugins\Modelo349;
 use FacturaScripts\Core\Controller\ApiRoot;
 use FacturaScripts\Core\Kernel;
 use FacturaScripts\Core\Template\InitClass;
+use FacturaScripts\Dinamic\Lib\Clave349;
 
 /**
  * Inicialización del plugin Modelo349: registra el endpoint de solo lectura de la API.
@@ -31,10 +32,12 @@ use FacturaScripts\Core\Template\InitClass;
 final class Init extends InitClass
 {
     /**
-     * Registra la ruta del endpoint /api/3/modelo349 y lo añade al listado de recursos de la API.
+     * Registra la ruta del endpoint /api/3/modelo349, lo añade al listado de recursos de la API y añade
+     * al campo "Operación" de las facturas de venta las operaciones con clave T, M, H, R y D.
      */
     public function init(): void
     {
+        Clave349::register();
         Kernel::addRoute('/api/3/modelo349', 'ApiModelo349', -1);
         ApiRoot::addCustomResource('modelo349');
     }
