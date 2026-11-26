@@ -23,10 +23,10 @@ Si no ves el menú del paso siguiente, activa el plugin Modelo349 desde **menú 
 ## 📋 Cómo se rellena
 
 1. Pulsa el menú **Informes**.
-2. Pasa el ratón por **Modelos fiscales**.
+2. Pasa el ratón por **Fiscalidad España**.
 3. Elige **Modelo 349**.
 
-![Menú Informes con el submenú Modelos fiscales y la opción Modelo 349 marcada](../Assets/como-rellenar-el-modelo-349/01-menu-modelo-349.png)
+![Menú Informes con el submenú Fiscalidad España y la opción Modelo 349 marcada](../Assets/como-rellenar-el-modelo-349/01-menu-modelo-349.png)
 
 Ahora elige qué declaración quieres ver:
 

@@ -8,7 +8,7 @@ solo tiene `min_version = 2026.72`).
 
 | Pieza | Qué hace |
 |---|---|
-| `Controller/Modelo349.php` | Pantalla (menú Informes > modelos fiscales). Lee el formulario, llama al cálculo y descarga el TXT. |
+| `Controller/Modelo349.php` | Pantalla (menú Informes > Fiscalidad España). Lee el formulario, llama al cálculo y descarga el TXT. |
 | `View/Modelo349.html.twig` | Formulario (ejercicio, periodo, serie, tipo de declaración, justificantes) y tablas de ventas y compras. |
 | `Controller/ApiModelo349.php` | Endpoint `GET /api/3/modelo349`. Solo valida el método y delega en `Lib/Modelo349Api`. |
 | `Init.php` | Registra la ruta de la API, el recurso `modelo349` en `ApiRoot` y las operaciones de venta del plugin (`Clave349::register()`). |

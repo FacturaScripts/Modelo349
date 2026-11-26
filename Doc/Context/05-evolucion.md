@@ -12,6 +12,7 @@ Historial corto (26 commits, jun-nov 2026).
 | 2026-10-27 y 2026-11-13 | Prefijo `EL` de Grecia (`e524e90`) y uso de `Vies::vatPrefix()` (`28e6e00`, `f895718`). |
 | 2026-11-13 | Avisos y títulos de pestañas (`d640a3e`); traducciones y script actualizador; versión 1.2 (`9aecdf5`). |
 | 2026-11-19 | CI: los tests solo se lanzan cuando cambia el código (`3b3a895`). |
+| 2026-11-26 | El informe pasa del submenú `tax-models` al subgrupo `taxation-spain` (Fiscalidad España), con el icono `fa-book`; versión 1.3. |
 | 2026-11-26 | `80b5df5`: cálculo a `Lib/Modelo349` filtrando por empresa y año del ejercicio; API de solo lectura; `Txt349Export` pasa a `Modelo349File`. |
 
 Antes de `80b5df5` el cálculo no filtraba por empresa y el año se tomaba del código del ejercicio.
